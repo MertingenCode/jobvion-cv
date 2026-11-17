@@ -1,28 +1,28 @@
-/* Hallmark v2.0.0 · Refract (by request) · water/pool · Funnel Display and Funnel Sans · signature: a typeset example CV */
+/* Hallmark v2.0.0 · custom Jobvion · pine and mint · Funnel Display and Funnel Sans · signature: a typeset example CV */
 /* Critique: the sample CV earns its space by showing the artifact before signup. */
 /* Waive 7b: Jobvion requires white paper for CV preview and export. */
 :root {
   color-scheme: light;
-  --color-primary: oklch(50% 0.12 234);
-  --color-on-primary: oklch(99% 0.003 95);
-  --color-ink: oklch(23% 0.035 245);
+  --color-primary: #166044;
+  --color-on-primary: #f4fff1;
+  --color-ink: #142b23;
   --color-accent: #0ea5a4;
-  --color-ground: oklch(98.2% 0.006 95);
+  --color-ground: #fcfbf5;
   --color-google-blue: #4285f4;
   --color-google-green: #34a853;
   --color-google-yellow: #fbbc05;
   --color-google-red: #ea4335;
-  --color-sample-accent: #115d69;
-  --color-surface: oklch(99.6% 0.005 210);
-  --color-rule: oklch(89.5% 0.008 230);
-  --color-field: #8392a8;
-  --color-muted: oklch(50% 0.025 240);
-  --color-focus: oklch(56% 0.14 234);
+  --color-sample-accent: #195e45;
+  --color-surface: #fffefa;
+  --color-rule: #d2dbce;
+  --color-field: #738679;
+  --color-muted: #475b50;
+  --color-focus: #126748;
   --color-success: #167140;
   --color-warning: #92400e;
   --color-danger: #b91c1c;
-  --color-stage: #e8efff;
-  --color-stage-rule: #bcccf1;
+  --color-stage: #dce9db;
+  --color-stage-rule: #9fb7a2;
   --color-paper: #ffffff;
   --color-paper-ink: #0f1b3d;
   --color-paper-muted: #53647b;
@@ -33,7 +33,7 @@
   --color-accent-hi: oklch(44% 0.12 236);
   --color-shade: oklch(86% 0.05 212);
   --color-shade-2: oklch(74% 0.07 220);
-  --color-light: oklch(99.6% 0.005 210);
+  --color-light: #fffefa;
   --color-wall: oklch(41% 0.09 225);
   --color-grout: oklch(91% 0.04 212);
   --edge-light: inset 0 1px 0 oklch(100% 0 0 / .9), inset 0 0 0 1px oklch(100% 0 0 / .55);
@@ -50,21 +50,21 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --color-primary: #5b8cff;
-    --color-on-primary: #0b1220;
-    --color-ink: #e6ecf5;
+    --color-primary: #a0dc95;
+    --color-on-primary: #101c17;
+    --color-ink: #edf7ef;
     --color-accent: #2dd4bf;
-    --color-ground: #0b1220;
-    --color-surface: #111a2e;
-    --color-rule: #24324d;
-    --color-field: #6c7e9d;
-    --color-muted: #94a3b8;
-    --color-focus: #8caeff;
+    --color-ground: #101c17;
+    --color-surface: #182821;
+    --color-rule: #435b4e;
+    --color-field: #809f8a;
+    --color-muted: #a9c2b1;
+    --color-focus: #b0efac;
     --color-success: #86efac;
     --color-warning: #fcd34d;
     --color-danger: #fda4af;
-    --color-stage: #152447;
-    --color-stage-rule: #344d7d;
+    --color-stage: #20372b;
+    --color-stage-rule: #53715f;
     --color-shadow: #00000045;
     --color-accent-hi: oklch(83% 0.11 230);
     --edge-light: inset 0 1px 0 oklch(88% 0.035 220 / .13);
@@ -73,21 +73,21 @@
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-primary: #5b8cff;
-  --color-on-primary: #0b1220;
-  --color-ink: #e6ecf5;
+  --color-primary: #a0dc95;
+  --color-on-primary: #101c17;
+  --color-ink: #edf7ef;
   --color-accent: #2dd4bf;
-  --color-ground: #0b1220;
-  --color-surface: #111a2e;
-  --color-rule: #24324d;
-  --color-field: #6c7e9d;
-  --color-muted: #94a3b8;
-  --color-focus: #8caeff;
+  --color-ground: #101c17;
+  --color-surface: #182821;
+  --color-rule: #435b4e;
+  --color-field: #809f8a;
+  --color-muted: #a9c2b1;
+  --color-focus: #b0efac;
   --color-success: #86efac;
   --color-warning: #fcd34d;
   --color-danger: #fda4af;
-  --color-stage: #152447;
-  --color-stage-rule: #344d7d;
+  --color-stage: #20372b;
+  --color-stage-rule: #53715f;
   --color-shadow: #00000045;
     --color-accent-hi: oklch(83% 0.11 230);
     --edge-light: inset 0 1px 0 oklch(88% 0.035 220 / .13);

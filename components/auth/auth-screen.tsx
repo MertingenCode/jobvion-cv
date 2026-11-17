@@ -1,3 +1,8 @@
+import { scoreProfile } from "@/lib/cv/check";
+import { sampleProfile } from "@/lib/cv/sample";
+import { getTemplate } from "@/lib/cv/templates";
+import { Check } from "lucide-react";
+import type { Destination } from "@/lib/auth/destination";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { OtpForm } from "@/components/auth/otp-form";
@@ -16,28 +21,39 @@ function ProviderIcon({ provider }: { provider: "google" | "apple" }) {
   </svg>;
 }
 
-export function AuthScreen({ locale, mode, status, siteKey, nonce }: { locale: Locale; mode: "login" | "signup"; status?: string; siteKey?: string; nonce?: string }) {
+export function AuthScreen({ locale, mode, status, siteKey, nonce, destination }: { locale: Locale; mode: "login" | "signup"; status?: string; destination?: Destination; siteKey?: string; nonce?: string }) {
   const t = useTranslations();
+  const marketing = useTranslations("landing");
   const auth = useTranslations("authFlow");
+  const sample = scoreProfile(sampleProfile(locale), getTemplate("essential")!, false);
   const opposite = mode === "login" ? "signup" : "login";
   const feedback = status === "failed" || status === "unavailable" || status === "limited" ? status : null;
   return <section className="container identity-layout">
+    <aside className="identity-context">
+      <h2>{marketing("authHeading")}</h2><p>{marketing("authIntro")}</p>
+      <ul>{(["newTitle", "importTitle", "tailorTitle", "letterTitle"] as const).map((key) =>
+        <li key={key}><Check size={18} aria-hidden="true" />{marketing(key)}</li>)}</ul>
+      <Link className="auth-proof" href={`/${locale}#cv-check`}>
+        <span>{marketing("example")}<strong>{marketing("score")}</strong></span>
+        <b>{sample.score}<small>/100</small></b>
+      </Link>
+    </aside>
     <div className="auth-main identity-panel">
       <h1>{t(mode)}</h1>
       <p className="lede">{auth(mode === "login" ? "loginIntro" : "signupIntro")}</p>
       {feedback && <p className="form-error" role="alert">{t(feedback)}</p>}
       <div className="auth-providers">
-        {(["google", "apple"] as const).map((provider) => <form key={provider} action={socialAuth.bind(null, locale, provider)}>
+        {(["google", "apple"] as const).map((provider) => <form key={provider} action={socialAuth.bind(null, locale, provider, destination)}>
           <Button type="submit" variant="outline" className="provider-button">
             <ProviderIcon provider={provider} />{auth(provider)}
           </Button>
         </form>)}
       </div>
       <p className="divider"><span>{auth("separator")}</span></p>
-      <OtpForm locale={locale} mode={mode} siteKey={siteKey} nonce={nonce} />
+      <OtpForm destination={destination} locale={locale} mode={mode} siteKey={siteKey} nonce={nonce} />
       <p className="auth-switch">
         {t(mode === "login" ? "needAccount" : "haveAccount")}{" "}
-        <Link href={`/${locale}/${opposite}`}>{t(opposite)}</Link>
+        <Link href={`/${locale}/${opposite}` + (destination ? "?next=" + destination : "")}>{t(opposite)}</Link>
       </p>
     </div>
   </section>;

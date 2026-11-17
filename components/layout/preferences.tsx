@@ -68,7 +68,7 @@ export function Preferences({ locale, labels }: {
     <div className="preferences">
       <PreferenceSelect label={labels.language} name="locale" value={locale} action={selectLocale}
         apply={labels.switchLanguage} includePath icon={<Globe2 size={16} />}>
-        {locales.map((code) => <option key={code} value={code} lang={code}>{localeNames[code]}</option>)}
+        {locales.map((code) => <option key={code} value={code} lang={code} aria-label={code.toUpperCase() + " " + localeNames[code]}>{code.toUpperCase()}</option>)}
       </PreferenceSelect>
       <form action={selectTheme} className="theme-switch">
         <button className="theme-to-dark" type="submit" name="theme" value="dark" aria-label={labels.dark} title={labels.dark}>

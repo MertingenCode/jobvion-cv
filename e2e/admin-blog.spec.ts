@@ -10,10 +10,10 @@ test("admin and draft preview reject public visitors, including the unlocalized 
   expect(worker.status()).toBe(403);
 });
 
-test("public blog index localizes its empty state and sitemap excludes drafts and admin", async ({ page, request }) => {
+test("public blog displays localized articles and excludes drafts from search", async ({ page, request }) => {
   await page.goto("/tr/blog");
-  await expect(page.getByRole("heading", { name: "Blog" })).toBeVisible();
-  await expect(page.getByText("Bu dilde henüz yazı yok.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Blog", exact: true })).toBeVisible();
+  await expect(page.locator('a[href="/tr/blog/reuse-one-cv-profile"]')).toBeVisible();
   const draft = await request.get("/en/blog/ats-friendly-resume");
   expect(draft.status()).toBe(404);
   const sitemap = await request.get("/sitemap.xml");

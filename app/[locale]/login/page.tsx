@@ -1,3 +1,4 @@
+import { selectDestination, workspacePath } from "@/lib/auth/destination";
 import { headers } from "next/headers";
 import { signupSiteKey } from "@/lib/auth/turnstile";
 import { notFound, redirect } from "next/navigation";
@@ -15,12 +16,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function Login({ params, searchParams }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ status?: string }>;
+  searchParams: Promise<{ status?: string; next?: string }>;
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   setRequestLocale(locale);
-  if (await verifiedUserId()) redirect(`/${locale}/app`);
+  const destination = selectDestination((await searchParams).next);
+  if (await verifiedUserId()) redirect(workspacePath(locale, destination));
   const nonce = (await headers()).get("x-jobvion-nonce") ?? undefined;
-  return <AuthScreen siteKey={signupSiteKey()} nonce={nonce} locale={locale} mode="login" status={(await searchParams).status} />;
+  return <AuthScreen destination={destination} siteKey={signupSiteKey()} nonce={nonce} locale={locale} mode="login" status={(await searchParams).status} />;
 }

@@ -31,7 +31,7 @@ test("uses the OS color scheme without JS on first paint and keeps sample paper 
   try {
     const page = await context.newPage();
     await page.goto("/en");
-    await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 18, 32)");
+    await expect(page.locator("body")).toHaveCSS("background-color", "rgb(16, 28, 23)");
     await expect(page.locator(".cv-paper")).toHaveCSS("background-color", "rgb(255, 255, 255)");
   } finally {
     await context.close();
@@ -41,7 +41,7 @@ test("uses the OS color scheme without JS on first paint and keeps sample paper 
 test("uses live OS changes initially and persists the sun and moon toggle", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/en");
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 18, 32)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(16, 28, 23)");
   await page.emulateMedia({ colorScheme: "light" });
   await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
   await expect(page.locator('.preference-form[data-enhanced="true"]')).toHaveCount(1);
@@ -49,13 +49,13 @@ test("uses live OS changes initially and persists the sun and moon toggle", asyn
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.reload();
   await expect(page.locator('.preference-form[data-enhanced="true"]')).toHaveCount(1);
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 18, 32)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(16, 28, 23)");
   await page.getByRole("button", { name: "Light", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.emulateMedia({ colorScheme: "dark" });
   await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
   await page.getByRole("button", { name: "Dark", exact: true }).click();
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 18, 32)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(16, 28, 23)");
 });
 
 test("protects the workspace and shows localized form labels on small screens", async ({ page }) => {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { defaultLocale, isLocale } from "@/i18n/config";
+import { selectDestination, workspacePath } from "@/lib/auth/destination";
 import { reconcileLocale } from "@/lib/auth/locale";
 import { readEnv } from "@/lib/env";
 import { serverSupabase } from "@/lib/supabase/server";
@@ -10,6 +11,7 @@ const callback = z.strictObject({
   code: z.string().min(1).max(512).optional(),
   token_hash: z.string().min(1).max(512).optional(),
   type: z.literal("email").optional(),
+  next: z.enum(["cv", "import", "tailor", "letter"]).optional(),
 }).refine(({ code, token_hash, type }) => Boolean(code && !token_hash && !type || !code && token_hash && type));
 
 export async function GET(request: NextRequest) {
@@ -29,5 +31,5 @@ export async function GET(request: NextRequest) {
 
   if (error || !data.user) return NextResponse.redirect(failure);
   await reconcileLocale(supabase, locale, data.user.user_metadata.jobvion_locale);
-  return NextResponse.redirect(new URL(`/${locale}/app`, origin));
+  return NextResponse.redirect(new URL(workspacePath(locale, selectDestination(params.data.next)), origin));
 }

@@ -7,9 +7,10 @@ import { Turnstile } from "@/components/auth/turnstile";
 import { otpAuth, type AuthStatus } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import type { Destination } from "@/lib/auth/destination";
 import type { Locale } from "@/i18n/config";
 
-type FormProps = { locale: Locale; mode: "login" | "signup"; siteKey?: string; nonce?: string };
+type FormProps = { locale: Locale; mode: "login" | "signup"; siteKey?: string; nonce?: string; destination?: Destination };
 type Channel = "email" | "sms";
 
 function Feedback({ status }: { status: AuthStatus }) {
@@ -21,12 +22,12 @@ function Feedback({ status }: { status: AuthStatus }) {
   </p>;
 }
 
-function ConfirmCode({ locale, mode, channel, contact, back }: Pick<FormProps, "locale" | "mode"> & {
+function ConfirmCode({ locale, mode, channel, contact, back, destination }: Pick<FormProps, "locale" | "mode" | "destination"> & {
   channel: Channel; contact: string; back: () => void;
 }) {
   const t = useTranslations("authFlow");
   const code = useRef<HTMLInputElement>(null);
-  const [status, action, pending] = useActionState<AuthStatus, FormData>(otpAuth.bind(null, locale, mode, channel), null);
+  const [status, action, pending] = useActionState<AuthStatus, FormData>(otpAuth.bind(null, locale, mode, channel, destination), null);
   useEffect(() => { code.current?.focus(); }, []);
 
   return <form action={action} className="email-form" aria-busy={pending}>
@@ -48,14 +49,14 @@ function ConfirmCode({ locale, mode, channel, contact, back }: Pick<FormProps, "
   </form>;
 }
 
-function CodeForm({ locale, mode, siteKey, nonce, channel }: FormProps & { channel: Channel }) {
+function CodeForm({ locale, mode, siteKey, nonce, channel, destination }: FormProps & { channel: Channel }) {
   const auth = useTranslations("authFlow");
   const common = useTranslations();
-  const [status, action, pending] = useActionState<AuthStatus, FormData>(otpAuth.bind(null, locale, mode, channel), null);
+  const [status, action, pending] = useActionState<AuthStatus, FormData>(otpAuth.bind(null, locale, mode, channel, destination), null);
   const [contact, setContact] = useState("");
   const [editing, setEditing] = useState(false);
   if (status === "sent" && !editing && !pending) {
-    return <ConfirmCode locale={locale} mode={mode} channel={channel} contact={contact} back={() => setEditing(true)} />;
+    return <ConfirmCode destination={destination} locale={locale} mode={mode} channel={channel} contact={contact} back={() => setEditing(true)} />;
   }
 
   return <form action={action} className="email-form otp-fields" aria-busy={pending} onSubmit={() => setEditing(false)}>

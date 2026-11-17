@@ -61,7 +61,7 @@ export default async function BlogArticle({ params }: Props) {
       {alt && <Image className="article-cover" src={coverUrl(post.id)} alt={alt} width={600} height={400} unoptimized />}
       <ArticleBody body={post.body} />
       {translations.filter((item) => item.locale !== post.locale).map((item) =>
-        <Link className="blog-link" key={item.locale} href={`/${item.locale}/blog/${item.slug}`} lang={item.locale}>{localeNames[item.locale]}</Link>)}
+        <Link className="blog-link" key={item.locale} href={`/${item.locale}/blog/${item.slug}`} lang={item.locale} aria-label={item.locale.toUpperCase() + " " + localeNames[item.locale]}>{item.locale.toUpperCase()}</Link>)}
     </article>
   );
 }

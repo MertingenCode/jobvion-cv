@@ -12,7 +12,7 @@ import "@fontsource-variable/funnel-display";
 import "@fontsource-variable/funnel-sans";
 import "@fontsource-variable/inter";
 import "../globals.css";
-import "../refract.css";
+import "../site.css";
 
 export function generateMetadata() {
   return { metadataBase: new URL(readEnv().APP_ORIGIN) };

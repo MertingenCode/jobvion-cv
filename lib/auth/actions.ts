@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { isLocale, type Locale } from "@/i18n/config";
+import { selectDestination, workspacePath, type Destination } from "@/lib/auth/destination";
 import { readEnv } from "@/lib/env";
 import { allowAuthAttempt } from "@/lib/auth/rate-limit";
 import { signupChallengeRequired, signupSiteKey } from "@/lib/auth/turnstile";
@@ -16,9 +17,11 @@ const otpInput = z.string().trim().regex(/^\d{6}$/);
 type Channel = "email" | "sms";
 export type AuthStatus = "invalid" | "unavailable" | "limited" | "failed" | "sent" | "codeInvalid" | "challenge" | null;
 
-function callbackUrl(locale: Locale) {
+function callbackUrl(locale: Locale, destination?: Destination) {
   const url = new URL("/auth/callback", readEnv().APP_ORIGIN);
   url.searchParams.set("locale", locale);
+  const next = selectDestination(destination);
+  if (next) url.searchParams.set("next", next);
   return url.href;
 }
 
@@ -26,6 +29,7 @@ export async function otpAuth(
   locale: Locale,
   mode: "login" | "signup",
   channel: Channel,
+  destination: Destination | undefined,
   _previous: AuthStatus,
   form: FormData,
 ): Promise<AuthStatus> {
@@ -44,7 +48,7 @@ export async function otpAuth(
       : { phone: contact.data, token: code.data, type: "sms" });
     if (error || !data.user || !data.session) return "codeInvalid";
     await reconcileLocale(supabase, locale, data.user.user_metadata.jobvion_locale);
-    redirect(`/${locale}/app`);
+    redirect(workspacePath(locale, destination));
   }
 
   if (!await allowAuthAttempt("otp-send", contact.data)) return "limited";
@@ -55,7 +59,7 @@ export async function otpAuth(
 
   const options = { shouldCreateUser: mode === "signup", captchaToken: token.data, data: { jobvion_locale: locale } };
   const { error } = await supabase.auth.signInWithOtp(channel === "email"
-    ? { email: contact.data, options: { ...options, emailRedirectTo: callbackUrl(locale) } }
+    ? { email: contact.data, options: { ...options, emailRedirectTo: callbackUrl(locale, destination) } }
     : { phone: contact.data, options: { ...options, channel: "sms" } });
   if (!error || ["otp_disabled", "user_not_found", "user_already_exists"].includes(error.code ?? "")) return "sent";
   if (error.status === 429) return "limited";
@@ -66,14 +70,14 @@ export async function otpAuth(
   return "failed";
 }
 
-export async function socialAuth(locale: Locale, provider: "google" | "apple") {
+export async function socialAuth(locale: Locale, provider: "google" | "apple", destination?: Destination) {
   if (!isLocale(locale)) redirect("/en/login");
   if (provider !== "google" && provider !== "apple") redirect(`/${locale}/login?status=failed`);
   const supabase = await serverSupabase();
   if (!supabase) redirect(`/${locale}/login?status=unavailable`);
   if (!await allowAuthAttempt("oauth")) redirect(`/${locale}/login?status=limited`);
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider, options: { redirectTo: callbackUrl(locale) },
+    provider, options: { redirectTo: callbackUrl(locale, destination) },
   });
   if (error || !data.url) redirect(`/${locale}/login?status=failed`);
   redirect(data.url);

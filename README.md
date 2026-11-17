@@ -105,3 +105,11 @@ To verify real text order with running Chrome, install or use a Python environme
 ```powershell
 npm run paddle:configure -- --confirm
 ```
+
+## Public CV check and localized content
+
+The homepage contains the five-check CV text demo and credit prices. The legacy pricing route redirects to the pricing section. The sample Essential PDF is available at /examples/jobvion-ats-cv.pdf and contains synthetic text.
+
+The public score runs in the browser. It checks contact information, recognizable experience and skills headings, dates, and readable lines. The workspace also checks whether the selected template is marked ATS-oriented. An existing CV can be brought into the workspace by pasting its text and reviewing the imported fields before applying them.
+
+All five guides and two built-in public blog articles have eight localized versions. The CMS continues to publish additional articles through the editorial workflow. A published CMS article with the same locale and slug as a built-in article takes precedence.

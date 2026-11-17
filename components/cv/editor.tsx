@@ -11,6 +11,9 @@ import { getTemplate, templates, type Template } from "@/lib/cv/templates";
 import { cvLocale, paperSizes, photoMaxBytes, type Profile } from "@/lib/cv/model";
 import { cvPost, downloadCv, responseError, type CvErrorCode } from "@/lib/cv/client";
 import { CvPaper, CvPaperStyles } from "@/components/cv/paper";
+import { CvImport } from "@/components/cv/import";
+import { CvScore } from "@/components/cv/score";
+import { scoreProfile } from "@/lib/cv/check";
 import { ProfileForm } from "@/components/cv/profile-form";
 import { TemplateGallery } from "@/components/cv/gallery";
 import { useProfileDraft } from "@/components/cv/draft";
@@ -19,6 +22,8 @@ import type { SavedCard } from "@/lib/cv/data";
 
 type EditorProps = {
   locale: Locale;
+  openImport?: boolean;
+  detached?: boolean;
   owner: string;
   profile: Profile;
   revision: number;
@@ -30,8 +35,10 @@ type EditorProps = {
 export function CvEditor(props: EditorProps) {
   const t = useTranslations("cv");
   const router = useRouter();
-  const draft = useProfileDraft(props.profile, props.revision);
+  const landing = useTranslations("landing");
+  const draft = useProfileDraft(props.profile, props.revision, Boolean(props.detached));
   const [choice, setChoice] = useCvChoice(props.locale, props.owner);
+  const [formVersion, setFormVersion] = useState(0);
   const [photoVersion, setPhotoVersion] = useState(props.photoVersion);
   const [message, setMessage] = useState<CvErrorCode | "photoReady" | "savedTitle" | null>(null);
   const [busy, setBusy] = useState(false);
@@ -87,6 +94,7 @@ export function CvEditor(props: EditorProps) {
       const result = await cvPost("/api/cv", { operation: "save", id: retrySave.current.id, ...input });
       if (!result.ok) return setMessage(await responseError(result));
       retrySave.current = null;
+      draft.recordSnapshot(input.profile);
       setMessage("savedTitle");
       router.refresh();
     } catch {
@@ -105,13 +113,16 @@ export function CvEditor(props: EditorProps) {
         <div className="cv-toolbar cv-heading-row">
           <h2>{t("profile")}</h2>
           <span className="cv-muted" role="status">{t(draft.status)}</span>
-          {!pending && draft.status !== "saved" && draft.status !== "conflict" &&
+          {!props.detached && !pending && draft.status !== "saved" && draft.status !== "conflict" &&
             <Button type="button" variant="quiet" onClick={() => void draft.flush()}>{t("retry")}</Button>}
         </div>
-        <ProfileForm profile={draft.profile} update={draft.update} />
+        {props.detached && <p className="cv-muted">{landing("scratchNote")}</p>}
+        <CvImport locale={props.locale} open={Boolean(props.openImport)} apply={(profile) => { draft.update(profile); setFormVersion((value) => value + 1); }} hasProfile={(!props.detached && props.revision > 0) || Boolean(draft.profile.name || draft.profile.summary || draft.profile.email)} />
+        <ProfileForm key={formVersion} profile={draft.profile} update={draft.update} />
       </section>
       <section className="cv-editor-preview">
         <h2>{t("preview")}</h2>
+        <div className="editor-score"><CvScore result={scoreProfile(draft.profile, template, resolvedChoice.photo)} note={landing("scoreLimit")} /></div>
         <div className="cv-fields">
           <div className="cv-field-grid">
             <div className="field"><label htmlFor="cv-template">{t("templates")}</label>

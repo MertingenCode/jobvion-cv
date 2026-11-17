@@ -1,3 +1,6 @@
+import type { Locale } from "@/i18n/config";
+import translated from "./guides-translations.json";
+
 export const guides = [
   {
     slug: "read-a-job-posting",
@@ -25,3 +28,9 @@ export const guides = [
     tr: ["İş başvurusu için son kontrol listesi", "Belgelerini, iletişim bilgilerini ve gönderim adımlarını her başvuruda aynı sırayla gözden geçir.", "Her iki dosyada işveren ve pozisyon adını doğrula. CV ve formdaki tarihlerin tutarlı olduğunu ve portfolyo bağlantısının oturum kapalıyken açıldığını kontrol et.", "Dosyaya anlaşılır bir ad ver, istenen biçimde yükle ve gönderim onayını sakla. Mülakata hazırlanmak için ilanı ve gönderdiğin belgeleri kaydet."],
   },
 ] as const;
+
+export function localizedGuide(locale: Locale, slug: string) {
+  const index = guides.findIndex((guide) => guide.slug === slug);
+  if (index === -1) return null;
+  return locale === "en" || locale === "tr" ? guides[index][locale] : translated[locale][index];
+}

@@ -4,16 +4,16 @@ import { publishedLinks } from "@/lib/blog/public";
 import { readEnv } from "@/lib/env";
 
 import { templates } from "@/lib/cv/templates";
-import { guides } from "@/lib/content/guides";
+import { guides } from "@/lib/content/guide";
 
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const origin = readEnv().APP_ORIGIN;
-  const published = ["", "/pricing", "/templates", "/guides", ...templates.map(({ id }) => "/templates/" + id)];
+  const published = ["", "/templates", "/guides", ...templates.map(({ id }) => "/templates/" + id)];
   const entries: MetadataRoute.Sitemap = published.flatMap((path) =>
     locales.map((locale) => ({ url: origin + "/" + locale + path })));
-  for (const locale of ["en", "tr"]) {
+  for (const locale of locales) {
     for (const { slug } of guides) entries.push({ url: origin + "/" + locale + "/guides/" + slug });
   }
   const links = await publishedLinks();

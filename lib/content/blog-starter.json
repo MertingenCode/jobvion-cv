@@ -1,0 +1,118 @@
+{
+  "reuse-one-cv-profile": {
+    "tr": [
+      "Her ilan için CV’yi baştan yazmak zorunda değilsin",
+      "Tek bir ana profil tutup başvuruda hangi deneyimin öne çıkacağına karar ver.",
+      "Ana profiline tarihleri, görevleri ve somut iş örneklerini ekle. Başvuru sırasında yalnızca bu kayıtları tekrar kullan. Bir projedeki rolünü sonraki sürümlerde farklı anlatmak yerine ilgili ayrıntıyı öne çıkar.",
+      "Örneğin tasarım ilanı araştırma istiyorsa kullanıcı görüşmelerini anlatan maddeyi yukarı al. İlan tasarım sistemleri arıyorsa, gerçekten yaptığın bileşen çalışmasını önce göster. Aynı görev tarihleri ve işverenler her sürümde tutarlı kalsın.",
+      "Her başvurudan önce son PDF’yi aç. İlanın başlığını, dosya adını ve CV’de ilk görünen iki deneyim maddesini birlikte kontrol et."
+    ],
+    "en": [
+      "Build once, tailor for each application",
+      "Keep a master profile and decide what each new application should lead with.",
+      "Build a master profile with dates, roles and concrete examples of your work. Reuse this record when applying. Change the emphasis to suit the role while keeping descriptions of your responsibilities consistent.",
+      "If a design role asks for research, lead with the user interviews you ran. For a design systems role, start with the component work you actually did. Keep employers and dates consistent across both versions.",
+      "Open the final PDF before sending it. Check the job title, file name and first two experience bullets together."
+    ],
+    "de": [
+      "Ein Profil für mehrere Bewerbungen",
+      "Pflege ein Hauptprofil und entscheide, welche Erfahrung in jeder Bewerbung zuerst steht.",
+      "Halte Daten, Funktionen und konkrete Arbeitsbeispiele im Hauptprofil fest. Nutze diese Informationen bei der Bewerbung erneut. Ändere die Gewichtung je nach Stelle und bleibe bei der Beschreibung deiner Aufgaben konsistent.",
+      "Bei einer Designstelle mit Forschungsschwerpunkt stehen Nutzerinterviews vorne. Für ein Designsystem nenne zuerst deine konkrete Komponentenarbeit. Arbeitgeber und Termine bleiben gleich.",
+      "Öffne vor dem Versand das PDF. Prüfe Stellenbezeichnung, Dateinamen und die ersten zwei Erfahrungspunkte zusammen."
+    ],
+    "fr": [
+      "Un profil pour plusieurs candidatures",
+      "Gardez un profil principal et choisissez l’expérience à mettre en premier pour chaque poste.",
+      "Rassemblez vos dates, fonctions et réalisations concrètes dans un profil principal. Réutilisez ces faits dans les candidatures. Ajustez l’ordre selon le poste et décrivez vos responsabilités de façon cohérente.",
+      "Pour un poste axé sur la recherche, commencez par les entretiens menés avec les utilisateurs. Pour un système de design, commencez par vos travaux sur les composants. Conservez les mêmes employeurs et dates.",
+      "Ouvrez le PDF final. Contrôlez le nom de la fonction, celui du fichier et les deux premières réalisations."
+    ],
+    "es": [
+      "Un perfil para distintas candidaturas",
+      "Guarda un perfil base y decide qué experiencia destacar en cada oferta.",
+      "Incluye en tu perfil base fechas, puestos y ejemplos concretos. Reutiliza esos datos. Ajusta el orden para cada vacante y mantén una descripción coherente de tu trabajo.",
+      "Si el puesto requiere investigación, empieza por las entrevistas a usuarios que realizaste. Para sistemas de diseño, destaca primero tu trabajo real con componentes. Mantén las empresas y las fechas en ambas versiones.",
+      "Antes de enviar, abre el PDF. Revisa el nombre del puesto, el archivo y los dos primeros puntos de experiencia."
+    ],
+    "it": [
+      "Un profilo per più candidature",
+      "Mantieni un profilo di base e scegli quale esperienza valorizzare per ogni annuncio.",
+      "Raccogli date, ruoli ed esempi concreti nel profilo. Riutilizzali nelle candidature. Modifica l’ordine in funzione dell’annuncio e descrivi le responsabilità con coerenza.",
+      "Per un ruolo di ricerca, metti in evidenza le interviste agli utenti che hai condotto. Per un design system, parti dal lavoro svolto sui componenti. Mantieni aziende e date coerenti tra le versioni.",
+      "Prima di inviare il PDF, controlla titolo della posizione, nome del file e i primi due punti di esperienza."
+    ],
+    "pt": [
+      "Um perfil para várias candidaturas",
+      "Guarda um perfil principal e decide qual a experiência a destacar em cada vaga.",
+      "Regista datas, funções e exemplos concretos no perfil. Reutiliza estes dados ao concorrer. Muda a ordem de acordo com a vaga e descreve as tuas responsabilidades de forma consistente.",
+      "Numa vaga com investigação, destaca as entrevistas que fizeste a utilizadores. Para um sistema de design, começa pelo trabalho real em componentes. Mantém as datas e os empregadores nas duas versões.",
+      "Antes de enviar, abre o PDF. Confirma o nome do cargo, o nome do ficheiro e os primeiros dois pontos de experiência."
+    ],
+    "nl": [
+      "Eén profiel voor meerdere sollicitaties",
+      "Houd één basisprofiel bij en kies per vacature welke ervaring bovenaan staat.",
+      "Verzamel datums, functies en concrete voorbeelden in je basisprofiel. Gebruik deze gegevens opnieuw. Pas de volgorde aan de vacature aan en beschrijf je verantwoordelijkheden consequent.",
+      "Vraagt een ontwerpfunctie om onderzoek? Zet de gebruikersinterviews die je afnam bovenaan. Voor een designsysteem zet je je componentwerk eerst. Houd werkgevers en datums gelijk.",
+      "Open de definitieve pdf voor verzending. Controleer de functietitel, bestandsnaam en eerste twee ervaringspunten samen."
+    ]
+  },
+  "check-keywords-with-evidence": {
+    "tr": [
+      "İlanın anahtar kelimelerini gerçek örneklerle eşleştir",
+      "Anahtar kelimeyi eklemeden önce, o beceriyi nerede kullandığını bul.",
+      "İlanı okurken aranan araç, yöntem veya sorumluluğun yanına profilden bir örnek yaz. ‘SQL’ geçiyorsa, gerçekten bir sorgu hazırladığın raporu veya projeyi ve neye katkı sağladığını belirt.",
+      "Bir gereksinim için deneyimin yoksa onu gelişim listene al veya benzer bir deneyimini açıkça anlat. Örneğin PostgreSQL kullandıysan bunu yaz, ilanda geçiyor diye Oracle tecrübesi ekleme.",
+      "Metni son kez taradığında her becerinin bir görev, proje veya eğitimle açıkça bağlandığını kontrol et."
+    ],
+    "en": [
+      "Match job keywords to evidence",
+      "Find where you used a skill before adding the keyword.",
+      "When reading a listing, pair each tool, method or responsibility with an example from your profile. If the listing mentions SQL, name the report or project where you actually wrote a query and explain what it supported.",
+      "If you lack a requirement, put it on your learning list or describe related experience clearly. Name PostgreSQL if that is what you used. Keep Oracle experience for projects where you used Oracle.",
+      "On the final read, check that every skill mentioned connects to work, a project or training."
+    ],
+    "de": [
+      "Schlüsselbegriffe mit Beispielen belegen",
+      "Finde zuerst heraus, wo du die geforderte Fähigkeit eingesetzt hast.",
+      "Ordne jedes relevante Werkzeug, jede Methode oder Aufgabe aus der Anzeige einem Beispiel aus deinem Profil zu. Bei SQL nenne den Bericht oder das Projekt, für das du tatsächlich eine Abfrage geschrieben hast.",
+      "Fehlt dir eine Erfahrung, kannst du sie als Lernziel ergänzen oder verwandte Kenntnisse erläutern. Nenne PostgreSQL, wenn du damit gearbeitet hast. Oracle gehört zu Projekten mit Oracle.",
+      "Prüfe am Schluss, ob jede genannte Fähigkeit mit einer Aufgabe, einem Projekt oder einer Schulung verbunden ist."
+    ],
+    "fr": [
+      "Relier les mots clés de l’offre à des preuves",
+      "Avant d’ajouter un mot clé, identifiez où vous avez mis la compétence en pratique.",
+      "Associez chaque outil, méthode ou responsabilité citée dans l’offre à un exemple de votre profil. Si SQL est demandé, nommez un rapport ou un projet pour lequel vous avez réellement écrit une requête.",
+      "Si une exigence manque, gardez-la comme objectif d’apprentissage ou décrivez une expérience voisine. Citez PostgreSQL si vous l’avez utilisé. Réservez Oracle aux projets qui en faisaient usage.",
+      "À la relecture, vérifiez que chaque compétence est reliée à une mission, un projet ou une formation."
+    ],
+    "es": [
+      "Relaciona las palabras clave con ejemplos reales",
+      "Identifica dónde usaste una habilidad antes de añadirla al CV.",
+      "Al leer una oferta, enlaza cada herramienta, método o tarea con un ejemplo de tu perfil. Si aparece SQL, menciona el proyecto o informe en el que escribiste una consulta y para qué sirvió.",
+      "Si te falta una competencia, añádela a tu lista de aprendizaje o explica una experiencia relacionada. Indica PostgreSQL si esa fue tu herramienta. Guarda Oracle para proyectos en los que lo usaste.",
+      "Al revisar, comprueba que todas las competencias se vinculan con un trabajo, un proyecto o una formación."
+    ],
+    "it": [
+      "Collega le parole chiave a esempi reali",
+      "Individua dove hai usato una competenza prima di inserirla nel CV.",
+      "Associa ogni strumento, metodo o responsabilità dell’annuncio a un esempio dal tuo profilo. Se viene richiesto SQL, indica il report o progetto in cui hai scritto una query e il suo scopo.",
+      "Se manca un requisito, tienilo come obiettivo di apprendimento o descrivi un’esperienza affine. Indica PostgreSQL se lo hai usato. Riserva Oracle ai progetti in cui era presente.",
+      "Nella revisione finale verifica che ogni competenza rimandi a un lavoro, un progetto o un corso."
+    ],
+    "pt": [
+      "Liga as palavras-chave a exemplos reais",
+      "Encontra onde usaste uma competência antes de a incluir no CV.",
+      "Ao ler um anúncio, associa cada ferramenta, método ou responsabilidade a um exemplo do teu perfil. Se pedirem SQL, identifica um relatório ou projeto em que escreveste uma consulta e explica para que serviu.",
+      "Se não tiveres um requisito, adiciona-o aos teus objetivos de aprendizagem ou descreve experiência próxima. Refere PostgreSQL se foi isso que usaste. Reserva Oracle para projetos com Oracle.",
+      "Na revisão final, confirma que cada competência está ligada a uma tarefa, projeto ou formação."
+    ],
+    "nl": [
+      "Koppel vacaturetermen aan echte voorbeelden",
+      "Bepaal waar je een vaardigheid gebruikte voordat je die aan je cv toevoegt.",
+      "Koppel elk hulpmiddel, elke methode of taak uit de vacature aan iets uit je profiel. Staat er SQL? Noem een rapport of project waarvoor je echt een query schreef en wat die opleverde.",
+      "Mis je een vereiste, zet die dan op je leerplan of beschrijf relevante verwante ervaring. Noem PostgreSQL als je dat gebruikte. Reserveer Oracle voor projecten waarin je met Oracle werkte.",
+      "Controleer bij de laatste lezing of elke genoemde vaardigheid terugkomt in een taak, project of opleiding."
+    ]
+  }
+}

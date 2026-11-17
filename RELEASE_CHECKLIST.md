@@ -11,11 +11,11 @@
 
 ## Local verification
 
-- Production build and lint passed. The 33-test suite included PostgreSQL accounting and real Chromium PDF generation.
-- All 15 Playwright scenarios passed, including eight locale pricing routes, public previews and anonymous access controls.
-- Hallmark reported no findings on home, pricing, templates and guides. Mobile Lighthouse measured 100 for SEO and performance on the Turkish home, pricing, gallery, template detail, guide index and one guide article.
+- Production build and lint passed. The 43-test suite included PostgreSQL accounting and real Chromium PDF generation.
+- All 17 Playwright scenarios passed, including single-page pricing, public previews, eight-locale editorial routes and anonymous access controls.
+- The redesign was rendered at mobile and desktop widths. The sample Essential PDF was checked for selectable text in reading order.
 - Production credentials, signed live or sandbox Paddle deliveries, external LLM responses, Supabase Auth CAPTCHA, email delivery, backups, schedules and operational alerts require staging verification.
-- The five guide articles and legal drafts are available in English and Turkish. Other guide routes link to the English articles.
+- The five guides and two starter blog articles have full text in all eight UI languages. Legal drafts are available in English and Turkish.
 
 ## Personal data and access
 

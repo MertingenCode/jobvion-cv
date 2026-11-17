@@ -28,22 +28,22 @@ describe("passwordless authentication", () => {
   });
 
   it("uses an email code, and keeps sign-in from creating a new account", async () => {
-    const status = await otpAuth("tr", "login", "email", null, fields({ operation: "send", contact: " Deniz@Example.test " }));
+    const status = await otpAuth("tr", "login", "email", undefined, null, fields({ operation: "send", contact: " Deniz@Example.test " }));
     expect(status).toBe("sent");
     expect(auth.signInWithOtp).toHaveBeenCalledWith({
       email: "deniz@example.test",
       options: { shouldCreateUser: false, data: { jobvion_locale: "tr" }, emailRedirectTo: "http://localhost:3000/auth/callback?locale=tr" },
     });
     auth.signInWithOtp.mockResolvedValue({ error: { code: "otp_disabled" } });
-    expect(await otpAuth("tr", "login", "email", null, fields({ operation: "send", contact: "absent@example.test" }))).toBe("sent");
+    expect(await otpAuth("tr", "login", "email", undefined, null, fields({ operation: "send", contact: "absent@example.test" }))).toBe("sent");
   });
 
   it("normalizes international phone numbers and requires the configured challenge on send", async () => {
     siteKey.mockReturnValue("configured");
     const contact = { operation: "send", contact: "+90 (555) 010 0100" };
-    expect(await otpAuth("tr", "signup", "sms", null, fields(contact))).toBe("challenge");
+    expect(await otpAuth("tr", "signup", "sms", undefined, null, fields(contact))).toBe("challenge");
     expect(auth.signInWithOtp).not.toHaveBeenCalled();
-    expect(await otpAuth("tr", "signup", "sms", null, fields({ ...contact, "cf-turnstile-response": "challenge-value" }))).toBe("sent");
+    expect(await otpAuth("tr", "signup", "sms", undefined, null, fields({ ...contact, "cf-turnstile-response": "challenge-value" }))).toBe("sent");
     expect(auth.signInWithOtp).toHaveBeenCalledWith({
       phone: "+905550100100",
       options: { shouldCreateUser: true, data: { jobvion_locale: "tr" }, captchaToken: "challenge-value", channel: "sms" },
@@ -53,9 +53,9 @@ describe("passwordless authentication", () => {
   it("verifies with the provider and enters the workspace only with a session", async () => {
     const request = fields({ operation: "verify", contact: "+905550100100", code: "012345" });
     auth.verifyOtp.mockResolvedValueOnce({ error: null, data: { user: {}, session: null } });
-    expect(await otpAuth("tr", "login", "sms", null, request)).toBe("codeInvalid");
+    expect(await otpAuth("tr", "login", "sms", undefined, null, request)).toBe("codeInvalid");
     auth.verifyOtp.mockResolvedValueOnce({ error: null, data: { user: { user_metadata: {} }, session: {} } });
-    await expect(otpAuth("tr", "login", "sms", null, request)).rejects.toThrow("redirect /tr/app");
+    await expect(otpAuth("tr", "login", "sms", undefined, null, request)).rejects.toThrow("redirect /tr/app");
     expect(auth.verifyOtp).toHaveBeenCalledWith({ phone: "+905550100100", token: "012345", type: "sms" });
     expect(reconcile).toHaveBeenCalledOnce();
   });
