@@ -9,6 +9,9 @@ export const reportSections = ["analytics", "ai-usage", "finance", "credits", "s
 type Section = (typeof reportSections)[number] | "overview";
 const reportSchema = z.object({
   asOf: z.string(),
+  registeredUsers: z.number(),
+  savedCvs: z.number(),
+  coverLetters: z.number(),
   newUsers: z.number(),
   activeUsers: z.number(),
   completedPacks: z.number(),
@@ -20,7 +23,7 @@ const reportSchema = z.object({
   finance: z.array(z.object({ currency: z.string().regex(/^[A-Z]{3}$/), gross: z.number(), refunded: z.number() })),
 });
 
-const overviewKeys = ["newUsers", "activeUsers", "completedPacks", "creditsSpent", "paidOrders"] as const;
+const overviewKeys = ["registeredUsers", "newUsers", "activeUsers", "savedCvs", "completedPacks", "coverLetters", "creditsSpent", "paidOrders"] as const;
 const aiKeys = ["aiCalls", "aiFailures", "aiCost"] as const;
 
 export async function Report({ locale, db, section, period }: {

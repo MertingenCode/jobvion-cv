@@ -15,6 +15,7 @@ export function Shell({ locale, theme, signedIn, children }: {
 }) {
   const t = useTranslations();
   const blog = useTranslations("blog");
+  const release = useTranslations("release");
   return (
     <>
       <a href="#content" className="skip-link">{t("skip")}</a>
@@ -39,7 +40,13 @@ export function Shell({ locale, theme, signedIn, children }: {
       <footer className="site-footer">
         <div className="container footer-row">
           <span>Jobvion</span>
-          <Link className="blog-link" href={`/${locale}/blog`}>{blog("title")}</Link>
+          <nav className="release-nav">
+            {(["pricing", "templates", "guides"] as const).map((page) =>
+              <Link key={page} className="blog-link" href={"/" + locale + "/" + page}>{release(page)}</Link>)}
+            <Link className="blog-link" href={"/" + locale + "/blog"}>{blog("title")}</Link>
+            <Link className="blog-link" href={"/" + locale + "/legal/privacy"}>{release("legal")}</Link>
+            <Link className="blog-link" href={"/" + locale + "/legal/refunds"}>{release("refundPolicy")}</Link>
+          </nav>
           <span>{t("copyright")}</span>
         </div>
       </footer>

@@ -87,3 +87,19 @@ docker build -f services/pdf-renderer/Dockerfile -t jobvion-pdf .
 Deploy the image to a private network reachable only from the application. Keep Chromium sandboxing enabled, give the container a writable temporary directory, and use a host seccomp policy that permits Chromium's user namespaces if the default blocks them. Limit container CPU and memory. The renderer blocks external network requests per browser context and reads fonts and portraits from in-memory data URLs.
 
 To verify real text order with running Chrome, install or use a Python environment containing `pypdf`. Set `JOBVION_PDF_TEST_PYTHON` to its executable alongside the renderer URL and token, then run `npm run test:pdf`. The test exports multi-page Turkish and German ATS documents, checks page sizes and heading order, and compares a premium layout with and without a photo.
+
+## Application, payments and production setup
+
+1. Apply all Supabase migrations. Start the private PDF renderer and configure the shared renderer token before enabling PDF download or ZIP data export.
+2. Set an OpenAI-compatible HTTPS base URL, API key, model and current input/output USD token rates. The cap is measured in microdollars. For example, 1000000 represents USD 1. Each provider attempt reserves a conservative amount until the next UTC day. Alert on budget warnings in the deployment logs.
+3. In Cloudflare, create a Turnstile widget for the application host. Set its public site key in Jobvion. In Supabase Auth Bot and Abuse Protection, enable Turnstile with the matching secret. This enables checks on signup and email/password login.
+4. In Paddle, configure the approved HTTPS checkout domain and an HTTPS default payment URL ending in /en/checkout. Create the 15, 40 and 100 credit prices at USD 4.99, 9.99 and 19.99. Load their IDs and run the command below. A credit package adds application credits. Premium template entitlement is managed separately.
+5. In Paddle, configure the notification destination /api/billing/webhook with transaction.completed, adjustment.created and adjustment.updated. Copy that destination’s signing secret to the environment. Verify buyer receipts and refund notices using the configured seller account.
+6. Schedule authenticated POST requests to /api/internal/maintenance using the maintenance bearer secret, and to /api/internal/publish-blog using the blog bearer secret. Maintenance reverses abandoned first-use application runs, clears expired Paddle event payloads and processes due account deletions. CV photos and blog covers are stored inline in PostgreSQL, so there is no separate object-storage cleanup job.
+7. Authorized owner/admin users can grant promotions from the admin dashboard. Credits expire after 30 days. Unspent promotional credits can be revoked with a reason. Application packs use monthly free credits first, followed by valid promotional credits and paid credits.
+8. Admin reports refresh from PostgreSQL on request. Registered accounts are counted across all time. Other counts use the selected rolling period in UTC. Active accounts have at least one generation run in that period. Gross credit spends include promotional use and reversals are tracked separately. Finance groups Paddle orders by original currency. AI costs use the configured provider rates and recorded token usage.
+9. Review SECURITY_CHECKLIST.md and RELEASE_CHECKLIST.md before deployment. The English and Turkish legal pages are review drafts.
+
+```powershell
+npm run paddle:configure -- --confirm
+```

@@ -3,6 +3,6 @@ import { locales } from "@/i18n/config";
 import { readEnv } from "@/lib/env";
 
 export default function robots(): MetadataRoute.Robots {
-  const disallow = ["/api/", "/admin", ...locales.flatMap((locale) => [`/${locale}/admin`, `/${locale}/app`])];
+  const disallow = ["/api/", "/admin", ...locales.flatMap((locale) => [`/${locale}/admin`, `/${locale}/app`, `/${locale}/checkout`])];
   return { rules: [{ userAgent: "*", allow: "/", disallow }], sitemap: readEnv().APP_ORIGIN + "/sitemap.xml" };
 }

@@ -6,7 +6,7 @@ import { CvSample } from "@/components/cv-sample";
 import { googleAuth } from "@/lib/auth/actions";
 import type { Locale } from "@/i18n/config";
 
-export function AuthScreen({ locale, mode, status }: { locale: Locale; mode: "login" | "signup"; status?: string }) {
+export function AuthScreen({ locale, mode, status, siteKey, nonce }: { locale: Locale; mode: "login" | "signup"; status?: string; siteKey?: string; nonce?: string }) {
   const t = useTranslations();
   const opposite = mode === "login" ? "signup" : "login";
   const feedback = status === "failed" || status === "unavailable" || status === "limited" ? status : null;
@@ -20,7 +20,7 @@ export function AuthScreen({ locale, mode, status }: { locale: Locale; mode: "lo
           <Button type="submit" variant="outline" className="google-button">{t("google")}</Button>
         </form>
         <p className="divider"><span>{t("separator")}</span></p>
-        <EmailForm locale={locale} mode={mode} />
+        <EmailForm locale={locale} mode={mode} siteKey={siteKey} nonce={nonce} />
         <p className="auth-switch">
           {t(mode === "login" ? "needAccount" : "haveAccount")}{" "}
           <Link href={`/${locale}/${opposite}`}>{t(opposite)}</Link>

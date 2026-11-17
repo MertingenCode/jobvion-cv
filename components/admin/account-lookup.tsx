@@ -1,15 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { findAccount, type AccountState } from "@/lib/admin/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export function AccountLookup() {
+export function AccountLookup({ canManagePromos = false }: { canManagePromos?: boolean }) {
   const locale = useLocale();
   const t = useTranslations("admin");
   const [state, action, pending] = useActionState(findAccount, {} as AccountState);
+  const release = useTranslations("release");
   const number = new Intl.NumberFormat(locale);
   const account = state.account;
   return <>
@@ -28,5 +30,6 @@ export function AccountLookup() {
       <div><dt>{t("paid")}</dt><dd>{account.paid === null ? "—" : number.format(account.paid)}</dd></div>
       <div><dt>{t("purchases")}</dt><dd>{number.format(account.purchases)}</dd></div>
     </dl>}
+    {account && canManagePromos && <Link className="blog-link" href={"/" + locale + "/admin/promotion?user=" + account.id}>{release("promotion")}</Link>}
   </>;
 }

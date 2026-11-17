@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { marketingMetadata } from "@/lib/seo";
+import { readEnv } from "@/lib/env";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -14,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = await getTranslations({ locale });
-  return { title: `Jobvion | ${t("copyright")}`, description: t("summary") };
+  return marketingMetadata(locale, "", t("slogan"), t("summary"));
 }
 
 export default async function Home({ params }: Props) {
@@ -22,8 +25,17 @@ export default async function Home({ params }: Props) {
   if (!isLocale(locale)) notFound();
   setRequestLocale(locale);
   const [t, user] = await Promise.all([getTranslations({ locale }), verifiedUserId()]);
+  const nonce = (await headers()).get("x-jobvion-nonce") ?? undefined;
+  const structured = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "Jobvion", url: readEnv().APP_ORIGIN + "/" + locale, inLanguage: locale,
+    description: t("summary"), applicationCategory: "BusinessApplication", operatingSystem: "Web",
+  };
   return (
     <section className="hero" aria-labelledby="home-title">
+      <script type="application/ld+json" nonce={nonce}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structured).replaceAll("<", "\\u003c") }} />
       <RefractWater />
       <div className="container refract-grid">
         <div className="intro-content">

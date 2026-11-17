@@ -24,10 +24,13 @@ export default async function AdminLayout({ children, params }: { children: Reac
   const session = await adminSession();
   if (!session) notFound();
   const t = await getTranslations({ locale, namespace: "admin" });
+  const release = await getTranslations({ locale, namespace: "release" });
   const root = `/${locale}/admin`;
   const { role } = session;
   const links = sections.filter(({ permission }) => !permission || permitted(role, permission))
     .map(({ path, label }) => <Link key={label} href={path ? root + "/" + path : root}>{t(label)}</Link>);
+
+  if (permitted(role, "audit")) links.push(<Link key="promotion" href={root + "/promotion"}>{release("promotion")}</Link>);
 
   return (
     <div className="container studio">

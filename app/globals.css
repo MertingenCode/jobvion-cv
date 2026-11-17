@@ -125,7 +125,7 @@ h1 {
 .button:disabled { opacity: .55; cursor: not-allowed; }
 .site-footer { border-top: 1px solid var(--color-rule); color: var(--color-muted); font-size: .875rem; }
 .footer-row { min-height: 4rem; }
-.footer-row :first-child { color: var(--color-ink); font-weight: 650; }
+.footer-row > :first-child { color: var(--color-ink); font-weight: 650; }
 
 .hero, .auth-layout {
   display: grid;
@@ -245,3 +245,29 @@ h1 {
 .article-copy h2 { font-size: 1.75rem; line-height: 1.25; margin-block-start: .6rem; }
 .article-copy ul { padding-inline-start: 1.4rem; list-style: disc; }
 .article-copy li + li { margin-block-start: .5rem; }
+
+.release-page { padding-block: clamp(2rem, 6vw, 5rem); }
+.release-stack { display: grid; gap: 1.25rem; align-content: start; justify-items: start; }
+.release-stack :is(h1, h2, h3, p) { margin: 0; }
+.release-page input, .release-page textarea { max-width: min(100%, 68ch); }
+.release-nav { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+.footer-row { flex-wrap: wrap; }
+.release-grid { display: grid; width: 100%; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+.release-list, .release-offers, .gallery-grid { list-style: none; padding: 0; margin: 0; }
+.release-list, .release-lined { display: grid; gap: 1rem; width: 100%; }
+.release-list > li, .release-lined > * { padding-block: .75rem; border-bottom: 1px solid var(--color-rule); }
+.release-offers > *, .gallery-grid > li { min-width: 0; border: 1px solid var(--color-rule); border-radius: var(--radius-inner); overflow: hidden; background: var(--color-surface); }
+.release-offers > * { padding: 1.25rem; }
+.gallery-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 12.5rem), 1fr)); }
+.gallery-grid a { display: grid; gap: .35rem; padding: .75rem; color: inherit; text-decoration: none; }
+.gallery-grid h2 { font-size: 1.2rem; }
+.gallery-grid a:hover h2 { text-decoration: underline; }
+.gallery-grid span { color: var(--color-muted); }
+.gallery-preview, .gallery-detail { padding: .75rem; background: var(--color-stage); border-radius: var(--radius-inner); overflow: hidden; }
+.gallery-preview { height: 10.5rem; }
+.gallery-detail { width: min(100%, 52rem); }
+.guide-article > p { max-width: 66ch; }
+.article-cover { width: min(100%, 600px); height: auto; border-radius: var(--radius-inner); }
+.gallery-miniature { width: max-content; transform-origin: top left; transform: scale(.21); }
+.release-stack textarea { width: min(100%, 68ch); }
+.release-page .lede { max-width: 64ch; }

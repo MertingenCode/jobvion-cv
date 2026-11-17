@@ -1,3 +1,5 @@
+import { BlogCover } from "@/components/admin/blog-cover";
+import { coverAlt } from "@/lib/blog/cover";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { z } from "zod";
@@ -30,6 +32,7 @@ export default async function EditPost({ params, searchParams }: {
     </div>
     <Notice value={(await searchParams).notice} />
     {(post.status === "draft" || post.status === "review") && <BlogEditor key={post.revision} locale={locale} post={post} />}
+    {(post.status === "draft" || post.status === "review") && <BlogCover id={id} alt={await coverAlt(id)} turkish={locale === "tr"} />}
     <BlogWorkflow locale={locale} post={post} publish={permitted(role, "publish")} revisions={revisions.data ?? []} />
   </>;
 }

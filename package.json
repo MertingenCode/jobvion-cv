@@ -13,8 +13,9 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "test:db": "vitest run tests/credits.integration.test.ts tests/admin-blog.integration.test.ts tests/cv.integration.test.ts",
+    "test:db": "vitest run tests/credits.integration.test.ts tests/admin-blog.integration.test.ts tests/cv.integration.test.ts tests/release.integration.test.ts",
     "admin:bootstrap": "node --env-file-if-exists=.env.local scripts/bootstrap-owner.mjs",
+    "paddle:configure": "node --env-file-if-exists=.env.local scripts/configure-paddle.mjs",
     "pdf:dev": "node --env-file-if-exists=.env.local services/pdf-renderer/server.mjs",
     "test:pdf": "vitest run tests/cv-pdf.integration.test.ts"
   },

@@ -5,6 +5,7 @@ import { z } from "zod";
 import { isLocale, type Locale } from "@/i18n/config";
 import { readEnv } from "@/lib/env";
 import { allowAuthAttempt } from "@/lib/auth/rate-limit";
+import { signupChallengeRequired, signupSiteKey } from "@/lib/auth/turnstile";
 import { reconcileLocale } from "@/lib/auth/locale";
 import { serverSupabase } from "@/lib/supabase/server";
 
@@ -30,7 +31,7 @@ export async function emailAuth(
 ): Promise<AuthStatus> {
   if (!isLocale(locale) || (mode !== "login" && mode !== "signup")) return "invalid";
   const values = credentials.safeParse(Object.fromEntries(
-    Array.from(form.entries()).filter(([key]) => !key.startsWith("$ACTION_")),
+    Array.from(form.entries()).filter(([key]) => !key.startsWith("$ACTION_") && key !== "cf-turnstile-response"),
   ));
   if (!values.success || (mode === "signup" && !signupPassword.safeParse(values.data.password).success)) {
     return "invalid";
@@ -39,10 +40,16 @@ export async function emailAuth(
   if (!supabase) return "unavailable";
   if (!await allowAuthAttempt(mode, values.data.email)) return "limited";
 
+
+  const siteKey = signupSiteKey();
+  if (signupChallengeRequired() && !siteKey) return "unavailable";
+  const token = z.string().min(1).max(2048).safeParse(form.get("cf-turnstile-response"));
+  if (siteKey && !token.success) return "failed";
+
   if (mode === "signup") {
     const { data, error } = await supabase.auth.signUp({
       ...values.data,
-      options: { emailRedirectTo: callbackUrl(locale), data: { jobvion_locale: locale } },
+      options: { captchaToken: token.data, emailRedirectTo: callbackUrl(locale), data: { jobvion_locale: locale } },
     });
     if (error && error.code !== "user_already_exists") return "failed";
     if (!data.session) return "confirm";
@@ -50,7 +57,7 @@ export async function emailAuth(
     redirect(`/${locale}/app`);
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword(values.data);
+  const { data, error } = await supabase.auth.signInWithPassword({ ...values.data, options: { captchaToken: token.data } });
   if (error) return "failed";
   await reconcileLocale(supabase, locale, data.user?.user_metadata.jobvion_locale);
   redirect(`/${locale}/app`);

@@ -1,3 +1,5 @@
+import { headers } from "next/headers";
+import { signupSiteKey } from "@/lib/auth/turnstile";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AuthScreen } from "@/components/auth/auth-screen";
@@ -16,5 +18,6 @@ export default async function Signup({ params }: { params: Promise<{ locale: str
   if (!isLocale(locale)) notFound();
   setRequestLocale(locale);
   if (await verifiedUserId()) redirect(`/${locale}/app`);
-  return <AuthScreen locale={locale} mode="signup" />;
+  const nonce = (await headers()).get("x-jobvion-nonce") ?? undefined;
+  return <AuthScreen locale={locale} mode="signup" siteKey={signupSiteKey()} nonce={nonce} />;
 }

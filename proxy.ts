@@ -24,13 +24,15 @@ export async function proxy(request: NextRequest) {
 
   const env = readEnv();
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  const [, locale, segment] = url.pathname.split("/");
+
   const csp = contentSecurityPolicy(nonce, env.NEXT_PUBLIC_SUPABASE_URL, process.env.NODE_ENV === "development");
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("Content-Security-Policy", csp);
   requestHeaders.set("x-jobvion-nonce", nonce);
 
   let response = NextResponse.next({ request: { headers: requestHeaders } });
-  const [, locale, segment] = url.pathname.split("/");
+
   const adminRoute = isLocale(locale) && segment === "admin";
   let adminAllowed = false;
   if (isLocale(locale) && env.NEXT_PUBLIC_SUPABASE_URL && env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY &&

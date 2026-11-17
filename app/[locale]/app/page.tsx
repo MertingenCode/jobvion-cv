@@ -22,12 +22,17 @@ export default async function Workspace({ params }: { params: Promise<{ locale: 
   const t = await getTranslations({ locale });
   const admin = await adminSession();
   const adminMessages = await getTranslations({ locale, namespace: "admin" });
+  const sections = await getTranslations({ locale, namespace: "release" });
   const cv = await getTranslations({ locale, namespace: "cv" });
   return (
     <section className="container workspace">
       <h1>{t("workspace")}</h1>
       <p className="lede">{t("workspaceText")}</p>
       <Link className={buttonVariants()} href={`/${locale}/app/cv`}>{cv("editor")}</Link>
+      <nav className="release-nav">
+        {(["application", "billing", "account"] as const).map((section) =>
+          <Link key={section} className="blog-link" href={"/" + locale + "/app/" + section}>{sections(section)}</Link>)}
+      </nav>
       {admin && <Link className="blog-link" href={`/${locale}/admin`}>{adminMessages("title")}</Link>}
       <form action={signOut.bind(null, locale)}>
         <Button type="submit" variant="outline">{t("logout")}</Button>

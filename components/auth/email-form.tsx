@@ -1,5 +1,6 @@
 "use client";
 
+import { Turnstile } from "@/components/auth/turnstile";
 import { useActionState, useState } from "react";
 import { useTranslations } from "next-intl";
 import { LoaderCircle } from "lucide-react";
@@ -8,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { Locale } from "@/i18n/config";
 
-export function EmailForm({ locale, mode }: { locale: Locale; mode: "login" | "signup" }) {
+export function EmailForm({ locale, mode, siteKey, nonce }: { locale: Locale; mode: "login" | "signup"; siteKey?: string; nonce?: string }) {
   const t = useTranslations();
   const [status, action, pending] = useActionState<AuthStatus, FormData>(emailAuth.bind(null, locale, mode), null);
   const [email, setEmail] = useState("");
@@ -28,6 +29,7 @@ export function EmailForm({ locale, mode }: { locale: Locale; mode: "login" | "s
           aria-describedby={isSignup ? "password-hint" : undefined} />
         {isSignup && <span id="password-hint" className="form-hint">{t("passwordHint")}</span>}
       </div>
+      {siteKey && <Turnstile siteKey={siteKey} nonce={nonce} pending={pending} />}
       {status && <p className={status === "confirm" ? "form-success" : "form-error"}
         role={status === "confirm" ? "status" : "alert"}>{t(status)}</p>}
       <Button type="submit" disabled={pending}>
