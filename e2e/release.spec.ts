@@ -59,3 +59,20 @@ test("protects release endpoints and keeps draft covers private", async ({ reque
   expect((await request.post("/api/internal/maintenance")).status()).toBe(403);
   expect((await request.get("/api/blog/cover/61cb1f43-a612-4235-9ac9-8622da9875e3")).status()).toBe(404);
 });
+
+test("explains package capacity and credit rules at mobile widths", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 780 });
+  await page.goto("/tr#pricing");
+  const rates = page.locator("#pricing");
+  await expect(rates.locator(".landing-prices > li")).toHaveCount(4);
+  await expect(rates.getByText("Her ay 3 ücretsiz başvuru kredisi")).toBeVisible();
+  for (const credits of [15, 40, 100]) {
+    await expect(rates.getByText(credits + " yeni başvuru taslağına kadar")).toBeVisible();
+  }
+  await expect(rates.getByText(/Kredi başına yaklaşık USD\s*0,33/)).toBeVisible();
+  await expect(rates.getByText(/İlan analizi kredi harcamaz/)).toBeVisible();
+  await expect(rates.getByText(/en fazla 3 yeniden üretim/)).toBeVisible();
+  await rates.getByText("Ay değiştiğinde bakiyeme ne olur?", { exact: true }).click();
+  await expect(rates.getByText(/Satın aldığın kredilerin kalan bakiyesi/)).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
+});

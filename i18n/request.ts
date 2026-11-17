@@ -3,6 +3,7 @@ import { defaultLocale, isLocale } from "@/i18n/config";
 import blog from "@/messages/blog.json";
 import cv from "@/messages/cv.json";
 import landing from "@/messages/landing.json";
+import pricing from "@/messages/pricing.json";
 import authFlow from "@/messages/auth-flow.json";
 import release from "@/messages/release.json";
 import adminEn from "@/messages/admin/en.json";
@@ -12,5 +13,5 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale;
   const locale = isLocale(requested) ? requested : defaultLocale;
   const base = (await import(`../messages/${locale}.json`)).default;
-  return { locale, messages: { ...base, blog: blog[locale], landing: landing[locale], authFlow: authFlow[locale], release: release[locale], cv: cv[locale], admin: locale === "tr" ? adminTr : adminEn } };
+  return { locale, messages: { ...base, blog: blog[locale], landing: landing[locale], pricing: pricing[locale], authFlow: authFlow[locale], release: release[locale], cv: cv[locale], admin: locale === "tr" ? adminTr : adminEn } };
 });

@@ -126,7 +126,7 @@ h2, h3 { min-width: 0; overflow-wrap: break-word; text-wrap: balance; }
 .landing-template-sheet { contain: inline-size; min-width: 0; height: clamp(9rem, 20vw, 16rem); background: var(--color-stage); border: 1px solid var(--color-rule); padding: .65rem; overflow: clip; border-radius: var(--radius-inner); }
 .landing-template-sheet > div { transform: scale(.34); transform-origin: top left; width: max-content; }
 .landing-prices { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
-.landing-prices li { display: grid; grid-template-rows: auto auto 1fr auto; gap: .65rem; padding: 1.2rem; border: 1px solid var(--color-rule); border-radius: var(--radius-card); }
+.landing-prices > li { display: grid; grid-template-rows: auto auto auto 1fr auto; gap: .65rem; padding: 1.2rem; border: 1px solid var(--color-rule); border-radius: var(--radius-card); }
 .landing-prices .free-offer { border-color: var(--color-primary); }
 .landing-prices h3 { font-size: 1.18rem; font-weight: 630; }
 .landing-prices strong { font-variant-numeric: tabular-nums; font-family: var(--font-display); font-weight: 660; font-size: 1.9rem; line-height: 1; }
@@ -194,7 +194,7 @@ h2, h3 { min-width: 0; overflow-wrap: break-word; text-wrap: balance; }
   .landing-score-card { padding: .45rem .55rem; }
   .landing-score-card .cv-score-top strong { font-size: 1.5rem; }
   .landing-template-sheet > div { transform: scale(.12); }
-  .workflow-action, .landing-prices li { padding: .85rem; }
+  .workflow-action, .landing-prices > li { padding: .85rem; }
   .landing-prices strong { font-size: 1.5rem; }
   .score-criteria li, .proof-panel li { column-gap: .3rem; }
 }
@@ -241,3 +241,31 @@ h2, h3 { min-width: 0; overflow-wrap: break-word; text-wrap: balance; }
 @media (max-width: 960px) {
   .mobile-navigation { display: block; }
 }
+
+.pricing-benefits, .credit-steps { list-style: none; padding: 0; margin: 0; }
+.pricing-benefits {
+  display: grid; align-content: start; gap: .45rem;
+  border-block-start: 1px solid var(--color-rule); padding-block-start: .8rem; padding-block-end: .45rem;
+  font-size: .9rem;
+}
+.pricing-benefits li { display: flex; align-items: flex-start; gap: .48rem; }
+.pricing-benefits svg, .credit-steps svg { flex: 0 0 auto; color: var(--color-primary); }
+.pricing-benefits svg { margin-block-start: .18rem; }
+.credit-guide {
+  margin-block-start: clamp(2rem, 5vw, 4rem); padding: clamp(1.15rem, 3.5vw, 2rem);
+  background: var(--landing-surface); border: 1px solid var(--color-rule); border-radius: var(--radius-card);
+}
+.credit-guide .section-heading h3 { font-weight: 610; font-size: clamp(1.65rem, 3vw, 2.6rem); line-height: 1.08; }
+.credit-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.35rem; }
+.credit-steps li { border-block-start: 1px solid var(--color-rule); padding-block-start: .8rem; }
+.credit-steps h4 { display: flex; align-items: center; gap: .55rem; margin-block-end: .45rem; font-weight: 650; }
+.credit-steps p, .credit-questions p { color: var(--color-muted); line-height: 1.55; }
+.credit-questions { border-block-end: 1px solid var(--color-rule); margin-block-start: 1.5rem; }
+.credit-questions details { border-block-start: 1px solid var(--color-rule); }
+.credit-questions summary { min-height: 44px; padding-block: .6rem; cursor: pointer; font-weight: 645; }
+.credit-questions p { padding-block-end: .7rem; max-width: 68ch; }
+@media (max-width: 600px) {
+  .landing-prices, .credit-steps { grid-template-columns: minmax(0, 1fr); }
+  .credit-steps { gap: .85rem; }
+}
+.credit-example { margin-block-start: 1.15rem; padding-inline-start: .8rem; border-inline-start: 3px solid var(--color-primary); }

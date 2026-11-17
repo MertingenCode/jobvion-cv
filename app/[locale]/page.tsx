@@ -7,12 +7,12 @@ import { isLocale } from "@/i18n/config";
 import { buttonVariants } from "@/components/ui/button";
 import { CvSample } from "@/components/cv-sample";
 import { CvScore, PublicCvCheck } from "@/components/cv/score";
-import { BuyCredits } from "@/components/billing/buy";
+import { Pricing } from "@/components/billing/pricing";
 import { verifiedUserId } from "@/lib/auth/session";
 import { entryPath, type Destination } from "@/lib/auth/destination";
 import { marketingMetadata } from "@/lib/seo";
 import { readEnv } from "@/lib/env";
-import { creditOffers } from "@/lib/billing/catalog";
+
 import { scoreProfile } from "@/lib/cv/check";
 import { sampleProfile } from "@/lib/cv/sample";
 import { reportMatches } from "@/lib/application/model";
@@ -60,7 +60,7 @@ export default async function Home({ params }: Props) {
   const checks = scoreProfile(profile, essential, false);
   const matches = reportMatches({ position: profile.title, company: "", required: ["Figma", "WCAG", "SQL"], preferred: [] }, profile);
   const previewTemplates = [essential, getTemplate("atlas")!, getTemplate("halo")!];
-  const currency = new Intl.NumberFormat(locale, { style: "currency", currency: "USD", currencyDisplay: "code" });
+
 
   return <div className="landing-page">
     <script type="application/ld+json" nonce={nonce}
@@ -139,20 +139,7 @@ export default async function Home({ params }: Props) {
       </div>
     </section>
 
-    <section className="container landing-section" id="pricing">
-      <div className="section-heading"><h2>{t("pricingTitle")}</h2><p>{t("pricingIntro")}</p></div>
-      <ul className="landing-prices">
-        <li className="free-offer">
-          <h3>{t("free")}</h3><strong>{currency.format(0)}</strong><p>{t("freeBody")}</p>
-          <Link href={start("cv")} className={buttonVariants()}>{t("start")}</Link>
-        </li>
-        {creditOffers.map(({ id, credits, usd }) => <li key={id}>
-          <h3>{release("packCredits", { credits })}</h3><strong>{currency.format(usd)}</strong>
-          <p>{t("packBody")}</p><BuyCredits pack={id} locale={locale} />
-        </li>)}
-      </ul>
-      <p className="price-help">{release("checkoutHelp")} <Link className="blog-link" href={`/${locale}/legal/refunds`}>{release("refundPolicy")}</Link></p>
-    </section>
+    <Pricing locale={locale} startHref={start("cv")} />
 
     <section className="landing-contrast" id="faq">
       <div className="container landing-section faq-grid">
