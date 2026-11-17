@@ -1,0 +1,72 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { useId, useSyncExternalStore, type ReactNode } from "react";
+import { Check, ChevronDown, Globe2, Monitor } from "lucide-react";
+import { localeNames, locales, type Locale } from "@/i18n/config";
+import { selectLocale, selectTheme } from "@/lib/security/actions";
+import { themes, type Theme } from "@/lib/security/preferences";
+
+const subscribeToHydration = () => () => {};
+const hydrated = () => true;
+const serverRendered = () => false;
+
+function PreferenceSelect({ label, name, value, action, apply, children, icon, includePath }: {
+  label: string;
+  name: string;
+  value: string;
+  action: (form: FormData) => void;
+  apply: string;
+  children: ReactNode;
+  icon: ReactNode;
+  includePath?: boolean;
+}) {
+  const id = useId();
+  const pathname = usePathname();
+  const enhanced = useSyncExternalStore(subscribeToHydration, hydrated, serverRendered);
+  return (
+    <form action={action} className="preference-form" data-enhanced={enhanced}>
+      {includePath && <input name="path" type="hidden" value={pathname} />}
+      <label className="sr-only" htmlFor={id}>{label}</label>
+      <div className="preference">
+        <span className="preference-icon" aria-hidden="true">{icon}</span>
+        <select
+          id={id}
+          key={value}
+          name={name}
+          defaultValue={value}
+          onChange={(event) => {
+            if (includePath) {
+              const field = event.currentTarget.form?.elements.namedItem("path");
+              if (field instanceof HTMLInputElement) field.value = pathname + window.location.search;
+            }
+            event.currentTarget.form?.requestSubmit();
+          }}
+        >
+          {children}
+        </select>
+        <ChevronDown className="preference-chevron" size={13} aria-hidden="true" />
+      </div>
+      <button type="submit" className="preference-submit" aria-label={apply}><Check size={18} aria-hidden="true" /></button>
+    </form>
+  );
+}
+
+export function Preferences({ locale, theme, labels }: {
+  locale: Locale;
+  theme: Theme;
+  labels: Record<Theme | "language" | "theme" | "switchLanguage" | "changeTheme", string>;
+}) {
+  return (
+    <div className="preferences">
+      <PreferenceSelect label={labels.language} name="locale" value={locale} action={selectLocale}
+        apply={labels.switchLanguage} includePath icon={<Globe2 size={16} />}>
+        {locales.map((code) => <option key={code} value={code} lang={code}>{localeNames[code]}</option>)}
+      </PreferenceSelect>
+      <PreferenceSelect label={labels.theme} name="theme" value={theme} action={selectTheme}
+        apply={labels.changeTheme} icon={<Monitor size={16} />}>
+        {themes.map((mode) => <option key={mode} value={mode}>{labels[mode]}</option>)}
+      </PreferenceSelect>
+    </div>
+  );
+}

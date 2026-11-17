@@ -1,0 +1,67 @@
+/* Hallmark v2.0.0 · Jobvion palette · document composition · Inter · signature: a typeset example CV */
+/* Critique: the sample CV earns its space by showing the artifact before signup. */
+/* Waive 74: the ground color comes from the supplied Jobvion palette. */
+:root {
+  color-scheme: light;
+  --color-primary: #2557d6;
+  --color-on-primary: #ffffff;
+  --color-ink: #0f1b3d;
+  --color-accent: #0ea5a4;
+  --color-ground: #f8fafc;
+  --color-surface: #ffffff;
+  --color-rule: #e2e8f0;
+  --color-field: #8392a8;
+  --color-muted: #53647b;
+  --color-focus: #2557d6;
+  --color-success: #167140;
+  --color-warning: #92400e;
+  --color-danger: #b91c1c;
+  --color-stage: #e8efff;
+  --color-stage-rule: #bcccf1;
+  --color-paper: #ffffff;
+  --color-paper-ink: #0f1b3d;
+  --color-paper-muted: #53647b;
+  --color-paper-rule: #c6d1e5;
+  --color-shadow: #10235124;
+  --font-ui: var(--font-inter), system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-primary: #5b8cff;
+    --color-on-primary: #0b1220;
+    --color-ink: #e6ecf5;
+    --color-accent: #2dd4bf;
+    --color-ground: #0b1220;
+    --color-surface: #111a2e;
+    --color-rule: #24324d;
+    --color-field: #6c7e9d;
+    --color-muted: #94a3b8;
+    --color-focus: #8caeff;
+    --color-success: #86efac;
+    --color-warning: #fcd34d;
+    --color-danger: #fda4af;
+    --color-stage: #152447;
+    --color-stage-rule: #344d7d;
+    --color-shadow: #00000045;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-primary: #5b8cff;
+  --color-on-primary: #0b1220;
+  --color-ink: #e6ecf5;
+  --color-accent: #2dd4bf;
+  --color-ground: #0b1220;
+  --color-surface: #111a2e;
+  --color-rule: #24324d;
+  --color-field: #6c7e9d;
+  --color-muted: #94a3b8;
+  --color-focus: #8caeff;
+  --color-success: #86efac;
+  --color-warning: #fcd34d;
+  --color-danger: #fda4af;
+  --color-stage: #152447;
+  --color-stage-rule: #344d7d;
+  --color-shadow: #00000045;
+}

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="{{ .Data.jobvion_locale }}">
+<body>
+<p>Jobvion</p>
+<p><a href="{{ .SiteURL }}/auth/callback?locale={{ .Data.jobvion_locale }}&amp;token_hash={{ .TokenHash }}&amp;type=email">
+{{ if eq .Data.jobvion_locale "tr" }}E-postanı onayla
+{{ else if eq .Data.jobvion_locale "de" }}E-Mail bestätigen
+{{ else if eq .Data.jobvion_locale "fr" }}Confirmez votre adresse e-mail
+{{ else if eq .Data.jobvion_locale "es" }}Confirma tu correo electrónico
+{{ else if eq .Data.jobvion_locale "it" }}Conferma il tuo indirizzo email
+{{ else if eq .Data.jobvion_locale "pt" }}Confirme o seu endereço de e-mail
+{{ else if eq .Data.jobvion_locale "nl" }}Bevestig je e-mailadres
+{{ else }}Confirm your email
+{{ end }}
+</a></p>
+</body>
+</html>

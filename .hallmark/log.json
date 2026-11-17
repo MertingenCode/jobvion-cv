@@ -1,0 +1,25 @@
+{
+  "entries": [
+    {
+      "shape": "document composition",
+      "theme": "Jobvion supplied system",
+      "axes": "light/grotesk/cool",
+      "hero": "stage",
+      "nav": "wordmark and preferences",
+      "footer": "quiet aligned footer",
+      "imagery": "HTML example CV",
+      "photos": [],
+      "entry": "account foundation",
+      "fingerprint": "Jobvion / shell / sample CV / single action",
+      "sections": [
+        "intro",
+        "footer"
+      ],
+      "signature": "an example CV set as text on white paper",
+      "waived": [
+        "74: the ground hex is specified by Jobvion"
+      ],
+      "prompt": "Jobvion Phase 1 shell and account screens"
+    }
+  ]
+}
