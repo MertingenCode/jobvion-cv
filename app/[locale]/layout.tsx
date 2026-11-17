@@ -4,6 +4,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import type { ReactNode } from "react";
 import { Shell } from "@/components/layout/shell";
+import { readEnv } from "@/lib/env";
 import { isLocale } from "@/i18n/config";
 import { isTheme, themeCookie } from "@/lib/security/preferences";
 import { verifiedUserId } from "@/lib/auth/session";
@@ -12,6 +13,10 @@ import "@fontsource-variable/funnel-sans";
 import "@fontsource-variable/inter";
 import "../globals.css";
 import "../refract.css";
+
+export function generateMetadata() {
+  return { metadataBase: new URL(readEnv().APP_ORIGIN) };
+}
 
 export default async function LocaleLayout({ children, params }: {
   children: ReactNode;
