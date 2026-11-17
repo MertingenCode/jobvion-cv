@@ -8,6 +8,7 @@ test("renders templates and public SEO in every locale", async ({ page, request 
   await page.getByRole("link", { name: /Essential/i }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Essential");
   await expect(page.locator(".gallery-detail")).toBeVisible();
+  await expect(page.locator(".gallery-detail .cv-preview-page")).toHaveCSS("transform-origin", "0px 0px");
 
   for (const locale of locales) {
     const response = await request.get("/" + locale + "/pricing");

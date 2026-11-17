@@ -3,13 +3,13 @@ import { useTranslations } from "next-intl";
 import { FileText } from "lucide-react";
 import type { ReactNode } from "react";
 import type { Locale } from "@/i18n/config";
-import type { Theme } from "@/lib/security/preferences";
+
 import { Preferences } from "@/components/layout/preferences";
 import { buttonVariants } from "@/components/ui/button";
 
-export function Shell({ locale, theme, signedIn, children }: {
+export function Shell({ locale, signedIn, children }: {
   locale: Locale;
-  theme: Theme;
+
   signedIn: boolean;
   children: ReactNode;
 }) {
@@ -26,9 +26,9 @@ export function Shell({ locale, theme, signedIn, children }: {
             Jobvion
           </Link>
           <div className="header-controls">
-            <Preferences locale={locale} theme={theme} labels={{
-              language: t("language"), theme: t("theme"), system: t("system"), dark: t("dark"), light: t("light"),
-              changeTheme: t("changeTheme"), switchLanguage: t("switchLanguage"),
+            <Preferences locale={locale} labels={{
+              language: t("language"), dark: t("dark"), light: t("light"),
+              switchLanguage: t("switchLanguage"),
             }} />
             <Link className={buttonVariants({ variant: "quiet" })} href={`/${locale}/${signedIn ? "app" : "login"}`}>
               {t(signedIn ? "app" : "login")}

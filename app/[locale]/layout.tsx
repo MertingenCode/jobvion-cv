@@ -34,7 +34,7 @@ export default async function LocaleLayout({ children, params }: {
     <html lang={locale} data-theme={theme}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <Shell locale={locale} theme={theme} signedIn={Boolean(user)}>{children}</Shell>
+          <Shell locale={locale} signedIn={Boolean(user)}>{children}</Shell>
         </NextIntlClientProvider>
       </body>
     </html>

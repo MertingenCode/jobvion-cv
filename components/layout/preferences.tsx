@@ -2,11 +2,11 @@
 
 import { usePathname } from "next/navigation";
 import { useId, useSyncExternalStore, type ReactNode } from "react";
-import { Check, ChevronDown, Globe2, Monitor } from "lucide-react";
+import { Check, ChevronDown, Globe2, Moon, Sun } from "lucide-react";
 import { localeNames, locales, type Locale } from "@/i18n/config";
 import { selectLocale, selectTheme } from "@/lib/security/actions";
 import { saveBeforeLocaleChange } from "@/lib/cv/client";
-import { themes, type Theme } from "@/lib/security/preferences";
+
 
 const subscribeToHydration = () => () => {};
 const hydrated = () => true;
@@ -59,10 +59,10 @@ function PreferenceSelect({ label, name, value, action, apply, children, icon, i
   );
 }
 
-export function Preferences({ locale, theme, labels }: {
+export function Preferences({ locale, labels }: {
   locale: Locale;
-  theme: Theme;
-  labels: Record<Theme | "language" | "theme" | "switchLanguage" | "changeTheme", string>;
+
+  labels: Record<"language" | "switchLanguage" | "light" | "dark", string>;
 }) {
   return (
     <div className="preferences">
@@ -70,10 +70,14 @@ export function Preferences({ locale, theme, labels }: {
         apply={labels.switchLanguage} includePath icon={<Globe2 size={16} />}>
         {locales.map((code) => <option key={code} value={code} lang={code}>{localeNames[code]}</option>)}
       </PreferenceSelect>
-      <PreferenceSelect label={labels.theme} name="theme" value={theme} action={selectTheme}
-        apply={labels.changeTheme} icon={<Monitor size={16} />}>
-        {themes.map((mode) => <option key={mode} value={mode}>{labels[mode]}</option>)}
-      </PreferenceSelect>
+      <form action={selectTheme} className="theme-switch">
+        <button className="theme-to-dark" type="submit" name="theme" value="dark" aria-label={labels.dark} title={labels.dark}>
+          <Moon size={19} aria-hidden="true" />
+        </button>
+        <button className="theme-to-light" type="submit" name="theme" value="light" aria-label={labels.light} title={labels.light}>
+          <Sun size={19} aria-hidden="true" />
+        </button>
+      </form>
     </div>
   );
 }

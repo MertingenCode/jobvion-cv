@@ -20,11 +20,6 @@
 .cv-tag { border: 1px solid var(--color-rule); padding: .12rem .65rem; border-radius: var(--radius-pill); font-size: .875rem; }
 .cv-ats-tag { color: var(--color-success); }
 .cv-design-tag { color: var(--color-warning); }
-.cv-preview-viewport {
-  position: relative; overflow: clip; contain: inline-size; width: 100%; min-width: 0; border: 1px solid var(--color-rule);
-  box-shadow: var(--shadow-card);
-}
-.cv-preview-page { transform-origin: top left; width: max-content; }
 .cv-repeat { border-top: 1px solid var(--color-rule); padding-block: .35rem .65rem; }
 .cv-repeat summary { min-height: 44px; cursor: pointer; padding-block: .55rem; font-weight: 600; }
 .cv-repeat summary:active { color: var(--color-primary); }

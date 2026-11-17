@@ -23,6 +23,7 @@ export default async function Workspace({ params }: { params: Promise<{ locale: 
   const admin = await adminSession();
   const adminMessages = await getTranslations({ locale, namespace: "admin" });
   const sections = await getTranslations({ locale, namespace: "release" });
+  const authFlow = await getTranslations({ locale, namespace: "authFlow" });
   const cv = await getTranslations({ locale, namespace: "cv" });
   return (
     <section className="container workspace">
@@ -32,6 +33,7 @@ export default async function Workspace({ params }: { params: Promise<{ locale: 
       <nav className="release-nav">
         {(["application", "billing", "account"] as const).map((section) =>
           <Link key={section} className="blog-link" href={"/" + locale + "/app/" + section}>{sections(section)}</Link>)}
+        <Link className="blog-link" href={"/" + locale + "/app/application?mode=letter"}>{authFlow("aiLetter")}</Link>
       </nav>
       {admin && <Link className="blog-link" href={`/${locale}/admin`}>{adminMessages("title")}</Link>}
       <form action={signOut.bind(null, locale)}>

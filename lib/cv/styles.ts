@@ -61,4 +61,27 @@ export const cvStyles = `
 .cv-sheet.cv-type-modern h1 { font-size: 27pt; font-weight: 760; letter-spacing: -.05em; }
 .cv-sheet.cv-type-editorial h1 { font-weight: 470; font-size: 34pt; letter-spacing: -.055em; }
 .cv-sheet.cv-type-editorial h2 { font-weight: 530; font-size: 13pt; }
+.cv-sheet:not(.cv-color-classic) { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+.cv-sheet.cv-color-banner .cv-doc-header {
+  background: var(--cv-accent);
+  color: var(--cv-paper);
+  border: 0;
+  border-radius: 2mm;
+  padding: 7mm;
+}
+.cv-sheet.cv-color-banner .cv-doc-header :is(h1, .cv-contact) { color: var(--cv-paper); }
+.cv-sheet.cv-color-sidebar .cv-doc-header {
+  padding: 4mm 5mm;
+  border: 0;
+  border-inline-start: 4px solid var(--cv-accent);
+  background: color-mix(in srgb, var(--cv-accent) 8%, var(--cv-paper));
+}
+.cv-sheet.cv-color-sidebar .cv-aside {
+  border: 0;
+  padding: 4mm;
+  border-radius: 2mm;
+  background: color-mix(in srgb, var(--cv-accent) 10%, var(--cv-paper));
+}
+.cv-sheet.cv-color-ribbon .cv-doc-header { border-top: 5px solid var(--cv-accent); padding-top: 4mm; }
+.cv-sheet.cv-color-ribbon .cv-section h2 { background: color-mix(in srgb, var(--cv-accent) 10%, var(--cv-paper)); padding: .35em .65em; }
 `;

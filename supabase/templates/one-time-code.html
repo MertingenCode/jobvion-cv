@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="{{ .Data.jobvion_locale }}">
+<body>
+<h1>Jobvion</h1>
+<p>
+{{ if eq .Data.jobvion_locale "tr" }}Tek kullanımlık giriş kodunuz
+{{ else if eq .Data.jobvion_locale "de" }}Dein einmaliger Anmeldecode
+{{ else if eq .Data.jobvion_locale "fr" }}Votre code de connexion à usage unique
+{{ else if eq .Data.jobvion_locale "es" }}Tu código de acceso de un solo uso
+{{ else if eq .Data.jobvion_locale "it" }}Il tuo codice monouso di accesso
+{{ else if eq .Data.jobvion_locale "pt" }}O teu código de acesso de utilização única
+{{ else if eq .Data.jobvion_locale "nl" }}Je eenmalige aanmeldcode
+{{ else }}Your one-time sign-in code
+{{ end }}
+</p>
+<p><strong>{{ .Token }}</strong></p>
+</body>
+</html>

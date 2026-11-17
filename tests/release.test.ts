@@ -75,3 +75,11 @@ it("writes matching ZIP directory records and rejects path traversal", () => {
   expect(bin.readUInt32LE(bin.readUInt32LE(bin.length - 6))).toBe(0x02014b50);
   expect(() => createZip([{ name: "../file", content: new Uint8Array() }])).toThrow();
 });
+
+it("uses existing projects for the dedicated cover letter while leaving CV order alone", () => {
+  const candidate = { ...profile, projects: [{ ...emptyEntry, title: "Invoice redesign", detail: "Prototyped a clearer invoice view." }] };
+  const draft = buildApplication(candidate, report, { skills: [], experience: [], evidence: [1] }, "tr", "letter");
+  expect(draft.cover).toContain(candidate.projects[0].detail);
+  expect(draft.profile.skills).toEqual(profile.skills);
+  expect(() => buildApplication(candidate, report, { skills: [], experience: [], evidence: [20] }, "tr", "letter")).toThrow();
+});

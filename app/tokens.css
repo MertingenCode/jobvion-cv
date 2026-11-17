@@ -8,6 +8,11 @@
   --color-ink: oklch(23% 0.035 245);
   --color-accent: #0ea5a4;
   --color-ground: oklch(98.2% 0.006 95);
+  --color-google-blue: #4285f4;
+  --color-google-green: #34a853;
+  --color-google-yellow: #fbbc05;
+  --color-google-red: #ea4335;
+  --color-sample-accent: #115d69;
   --color-surface: oklch(99.6% 0.005 210);
   --color-rule: oklch(89.5% 0.008 230);
   --color-field: #8392a8;

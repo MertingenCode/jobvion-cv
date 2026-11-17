@@ -3,6 +3,7 @@ export const freeTemplateIds = ["essential", "compact", "executive"] as const;
 type Layout = "linear" | "left" | "right";
 type Heading = "plain" | "line" | "bar" | "smallcaps" | "block";
 type Header = "aligned" | "center" | "hero" | "wide" | "boxed";
+type ColorTreatment = "classic" | "banner" | "sidebar" | "ribbon";
 type Type = "neutral" | "editorial" | "modern";
 
 export type Template = {
@@ -13,6 +14,7 @@ export type Template = {
   header: Header;
   typography: Type;
   accent: string;
+  color: ColorTreatment;
   columns: 1 | 2;
   supports_photo: boolean;
   ats_safe: boolean;
@@ -23,6 +25,11 @@ export type Template = {
 
 const palette = {
   ink: "#173247",
+  cobalt: "#244cab",
+  rose: "#972f55",
+  evergreen: "#11604d",
+  ultraviolet: "#613991",
+  copper: "#9b471d",
   forest: "#27564d",
   teal: "#155769",
   slate: "#38425a",
@@ -41,11 +48,11 @@ const blueprints = [
   ["essential", "Essential", "linear", "plain", "aligned", "neutral", "ink", false],
   ["compact", "Compact", "linear", "smallcaps", "aligned", "modern", "ink", false],
   ["executive", "Executive", "linear", "line", "center", "editorial", "ink", false],
-  ["atlas", "Atlas", "left", "bar", "wide", "modern", "marine", true],
+  ["atlas", "Atlas", "left", "bar", "wide", "modern", "cobalt", true],
   ["archive", "Archive", "left", "line", "aligned", "editorial", "umber", false],
   ["anchor", "Anchor", "left", "block", "hero", "neutral", "forest", true],
   ["boreal", "Boreal", "right", "line", "wide", "neutral", "teal", true],
-  ["brio", "Brio", "right", "bar", "center", "modern", "terracotta", true],
+  ["brio", "Brio", "right", "bar", "center", "modern", "rose", true],
   ["baker", "Baker", "right", "smallcaps", "boxed", "editorial", "umber", false],
   ["clarity", "Clarity", "linear", "line", "wide", "modern", "slate", true],
   ["coda", "Coda", "linear", "block", "aligned", "editorial", "aubergine", false],
@@ -58,22 +65,28 @@ const blueprints = [
   ["etch", "Etch", "right", "bar", "boxed", "neutral", "ink", true],
   ["folio", "Folio", "linear", "bar", "hero", "editorial", "marine", true],
   ["field", "Field", "linear", "plain", "boxed", "modern", "olive", false],
-  ["fresco", "Fresco", "linear", "line", "aligned", "editorial", "terracotta", true],
+  ["fresco", "Fresco", "linear", "line", "aligned", "editorial", "copper", true],
   ["glen", "Glen", "left", "smallcaps", "center", "modern", "forest", false],
   ["grain", "Grain", "left", "block", "aligned", "editorial", "umber", true],
-  ["grove", "Grove", "left", "bar", "hero", "neutral", "olive", true],
+  ["grove", "Grove", "left", "bar", "hero", "neutral", "evergreen", true],
   ["harbor", "Harbor", "right", "line", "hero", "editorial", "marine", true],
-  ["halo", "Halo", "right", "smallcaps", "center", "neutral", "aubergine", true],
+  ["halo", "Halo", "right", "smallcaps", "center", "neutral", "ultraviolet", true],
   ["horizon", "Horizon", "right", "plain", "wide", "modern", "teal", false],
   ["isle", "Isle", "linear", "block", "center", "modern", "teal", true],
   ["index", "Index", "linear", "bar", "aligned", "neutral", "slate", false],
   ["inkstone", "Inkstone", "linear", "smallcaps", "hero", "editorial", "aubergine", true],
 ] as const satisfies readonly Blueprint[];
 
+const colorTreatments: Partial<Record<string, ColorTreatment>> = {
+  atlas: "sidebar", anchor: "banner", brio: "sidebar", coda: "ribbon",
+  dune: "sidebar", folio: "banner", fresco: "ribbon", grove: "sidebar",
+  harbor: "banner", halo: "sidebar", inkstone: "banner",
+};
+
 export const templates: readonly Template[] = blueprints.map(([id, name, layout, heading, header, typography, accent, photo]) => {
   const free = freeTemplateIds.some((freeId) => freeId === id);
   return {
-    id, name, layout, heading, header, typography, accent: palette[accent],
+    id, name, layout, heading, header, typography, accent: palette[accent], color: colorTreatments[id] ?? "classic",
     columns: layout === "linear" ? 1 : 2,
     supports_photo: photo, ats_safe: free, rtl_ready: false, languages,
     tier: free ? "free" : "premium",

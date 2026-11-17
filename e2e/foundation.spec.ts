@@ -10,7 +10,7 @@ test("negotiates only the root, preserves explicit URLs, and remembers language 
     await expect(page.locator("html")).toHaveAttribute("lang", "de");
     await page.goto("/en/login?source=home");
     await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
-    await expect(page.locator('.preference-form[data-enhanced="true"]')).toHaveCount(2);
+    await expect(page.locator('.preference-form[data-enhanced="true"]')).toHaveCount(1);
     await page.getByRole("combobox", { name: "Language", exact: true }).selectOption("tr");
     await expect(page).toHaveURL(/\/tr\/login\?source=home$/);
     await page.goto("/");
@@ -38,23 +38,23 @@ test("uses the OS color scheme without JS on first paint and keeps sample paper 
   }
 });
 
-test("uses live OS changes in System and persists a manual override", async ({ page }) => {
+test("uses live OS changes initially and persists the sun and moon toggle", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/en");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 18, 32)");
   await page.emulateMedia({ colorScheme: "light" });
   await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
-  await expect(page.locator('.preference-form[data-enhanced="true"]')).toHaveCount(2);
-  await page.getByRole("combobox", { name: "Appearance", exact: true }).selectOption("dark");
+  await expect(page.locator('.preference-form[data-enhanced="true"]')).toHaveCount(1);
+  await page.getByRole("button", { name: "Dark", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.reload();
-  await expect(page.locator('.preference-form[data-enhanced="true"]')).toHaveCount(2);
+  await expect(page.locator('.preference-form[data-enhanced="true"]')).toHaveCount(1);
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 18, 32)");
-  await page.getByRole("combobox", { name: "Appearance", exact: true }).selectOption("light");
+  await page.getByRole("button", { name: "Light", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.emulateMedia({ colorScheme: "dark" });
   await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
-  await page.getByRole("combobox", { name: "Appearance", exact: true }).selectOption("system");
+  await page.getByRole("button", { name: "Dark", exact: true }).click();
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 18, 32)");
 });
 
@@ -77,3 +77,15 @@ for (const mode of ["light", "dark"] as const) {
     });
   }
 }
+
+test("offers Google, Apple and email or phone codes on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 760 });
+  await page.goto("/tr/login");
+  await expect(page.getByRole("button", { name: "Google ile devam et" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Apple ile devam et" })).toBeVisible();
+  await expect(page.getByLabel("E-posta adresi")).toBeVisible();
+  await expect(page.locator("input[type=password]")).toHaveCount(0);
+  await page.getByRole("button", { name: "Telefon", exact: true }).click();
+  await expect(page.getByLabel("Telefon numarası")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Kod gönder" })).toBeVisible();
+});

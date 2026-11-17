@@ -11,7 +11,7 @@ export function contentSecurityPolicy(nonce: string, supabaseUrl: string | undef
     "frame-src https://*.paddle.com https://challenges.cloudflare.com",
     "object-src 'none'",
     "base-uri 'none'",
-    ["form-action", "'self'", supabase, supabase ? "https://accounts.google.com" : ""].filter(Boolean).join(" "),
+    ["form-action", "'self'", supabase, supabase ? "https://accounts.google.com https://appleid.apple.com" : ""].filter(Boolean).join(" "),
     "frame-ancestors 'none'",
   ].join("; ");
 }

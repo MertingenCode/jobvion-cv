@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { marketingMetadata } from "@/lib/seo";
 import { readEnv } from "@/lib/env";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { isLocale } from "@/i18n/config";
@@ -25,6 +26,7 @@ export default async function Home({ params }: Props) {
   if (!isLocale(locale)) notFound();
   setRequestLocale(locale);
   const [t, user] = await Promise.all([getTranslations({ locale }), verifiedUserId()]);
+  const release = await getTranslations({ locale, namespace: "release" });
   const nonce = (await headers()).get("x-jobvion-nonce") ?? undefined;
   const structured = {
     "@context": "https://schema.org",
@@ -41,9 +43,12 @@ export default async function Home({ params }: Props) {
         <div className="intro-content">
           <h1 id="home-title">{t("slogan")}</h1>
           <p className="lede">{t("summary")}</p>
+          <div className="hero-actions">
           <Link href={`/${locale}/${user ? "app" : "signup"}`} className={buttonVariants()}>
-            {t(user ? "app" : "getStarted")}
+            {t(user ? "app" : "getStarted")}<ArrowRight size={18} aria-hidden="true" />
           </Link>
+          <Link href={"/" + locale + "/templates"} className={buttonVariants({variant:"outline"})}>{release("gallery")}</Link>
+          </div>
         </div>
         <CvSample />
       </div>

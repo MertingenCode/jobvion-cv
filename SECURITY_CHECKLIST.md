@@ -14,7 +14,7 @@ The dependency audit currently reports GHSA-fc5q-39xc-vjpf in two installed pico
 ## Production checks
 
 - Confirm the reverse proxy overwrites the trusted IP header and that Upstash denies excess requests.
-- Enable Turnstile in Supabase Auth and verify signup and login in the production domain and email provider configuration.
+- Enable Turnstile in Supabase Auth and verify email and SMS code delivery, verification, Google and Apple callbacks, and rate limits on the production domain.
 - Validate Paddle webhook delivery, approved adjustments, and receipt and refund emails in sandbox before enabling live credentials.
 - Monitor LLM budget warnings, failed Paddle events, deletion retries and provider errors. Wire deployment logs to operational alerts.
 - Confirm secret custody and rotation, DB recovery, owner MFA, live CMS permissions and public/draft image behavior.

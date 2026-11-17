@@ -7,15 +7,17 @@ import { Button } from "@/components/ui/button";
 import { cvPost,downloadCv } from "@/lib/cv/client";
 import { localeNames,locales,type Locale } from "@/i18n/config";
 import type { Profile } from "@/lib/cv/model";
-import type { JobReport } from "@/lib/application/model";
+import type { ApplicationFocus, JobReport } from "@/lib/application/model";
 
 type Analysis={id:string;report:JobReport;matches:{term:string;matched:boolean;level:string}[]};
 type Draft={profile:Profile;cover:string;language:Locale;before?:{skills:string[];experience:Pick<Profile["experience"][number],"title"|"organization">[]}};
 const failures=["limited","noCredits","budget","generationFailed","profileRequired","regenerationLimit","running","conflict","unavailable","invalid"] as const;
 
-export function ApplicationEditor({locale,recent}:{locale:Locale;recent:{id:string;title:string}[]}) {
+export function ApplicationEditor({locale,recent,focus}:{locale:Locale;focus:ApplicationFocus;recent:{id:string;title:string}[]}) {
   const t=useTranslations("release");
   const cv=useTranslations("cv");
+  const authFlow = useTranslations("authFlow");
+  const letterOnly = focus === "letter";
   const [text,changeText]=useState("");
   const [language,setLanguage]=useState(locale);
   const [history,setHistory]=useState(recent);
@@ -58,7 +60,7 @@ export function ApplicationEditor({locale,recent}:{locale:Locale;recent:{id:stri
         const regenerate=kind==="regenerate";
         const attempt=request?.retry===regenerate?request:{id:crypto.randomUUID(),retry:regenerate};
         setRequest(attempt);
-        response=await cvPost("/api/application",{operation:"generate",id:analysis.id,request:attempt.id,regenerate,language});
+        response=await cvPost("/api/application",{operation:"generate",id:analysis.id,request:attempt.id,regenerate,language,focus});
       }else{
         if(!draft||!analysis)return;
         response=kind==="letter"?await cvPost("/api/application",{operation:"edit",id:analysis.id,cover:draft.cover})
@@ -81,6 +83,16 @@ export function ApplicationEditor({locale,recent}:{locale:Locale;recent:{id:stri
       else setMessage("saved");
       setRequest(null);
     }catch{setMessage("unavailable");}finally{setBusy(false);}
+  }
+
+  function downloadLetter() {
+    if (!draft?.cover.trim()) return;
+    const url = URL.createObjectURL(new Blob([draft.cover], { type: "text/plain;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Jobvion-cover-letter.txt";
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   return <div className="release-stack">
@@ -112,10 +124,11 @@ export function ApplicationEditor({locale,recent}:{locale:Locale;recent:{id:stri
       </select>
       <p className="cv-muted">{t("requestCost")}</p>
       <Button type="button" onClick={()=>void action(draft?"regenerate":"generate")} disabled={busy}>
-        {t(draft?"regenerate":"generate")}
+        {draft ? t("regenerate") : letterOnly ? authFlow("writeLetter") : t("generate")}
       </Button>
     </section>}
     {draft&&<section className="release-stack release-lined">
+      {!letterOnly && <>
       <h2>{t("saveCv")}</h2>
       {draft.before && <details>
         <summary>{locale === "tr" ? "Profildeki önceki sıra" : "Original profile order"}</summary>
@@ -137,10 +150,14 @@ export function ApplicationEditor({locale,recent}:{locale:Locale;recent:{id:stri
         <Button type="button" onClick={()=>void action("cv")} disabled={busy}>{t("saveCv")}</Button>
         <Button type="button" onClick={()=>void action("pdf")} disabled={busy} variant="outline">{cv("download")}</Button>
       </div>
+      </>}
       <label htmlFor="letter">{t("cover")}</label>
       <textarea className="input" id="letter" rows={10} maxLength={8000} value={draft.cover}
         onChange={(e)=>setDraft({...draft,cover:e.target.value})}/>
-      <Button type="button" onClick={()=>void action("letter")} disabled={busy||!draft.cover.trim()}>{t("saveCover")}</Button>
+      <div className="cv-toolbar">
+        <Button type="button" onClick={()=>void action("letter")} disabled={busy||!draft.cover.trim()}>{t("saveCover")}</Button>
+        <Button type="button" variant="outline" onClick={downloadLetter} disabled={busy||!draft.cover.trim()}>{authFlow("exportLetter")}</Button>
+      </div>
     </section>}
     {message&&<p role="status" className={message==="saved"?"form-success":"form-error"}>{message === "limited" ? cv("limited") : t(message)}</p>}
     {message==="profileRequired"&&<Link className="blog-link" href={`/${locale}/app/cv`}>{cv("editor")}</Link>}

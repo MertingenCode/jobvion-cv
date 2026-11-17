@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { renderCv } from "@/lib/cv/document";
-import { emptyEntry, initialProfile, type CvChoice } from "@/lib/cv/model";
+import type { CvChoice } from "@/lib/cv/model";
+import { sampleProfile } from "@/lib/cv/sample";
 import { templates, type Template } from "@/lib/cv/templates";
 
 const filters = ["all", "free", "premium", "ats", "photos", "photoFree"] as const;
@@ -11,17 +12,12 @@ type Filter = (typeof filters)[number];
 
 export function TemplateGallery({ choice, select }: { choice: CvChoice; select: (template: Template) => void }) {
   const t = useTranslations("cv");
-  const shared = useTranslations();
+
   const [filter, setFilter] = useState<Filter>("all");
   const [expanded, setExpanded] = useState(false);
   const visible = templates.filter((template) => filter === "all" || filter === template.tier ||
     (filter === "ats" && template.ats_safe) || (filter === "photos" && template.supports_photo) || (filter === "photoFree" && !template.supports_photo));
-  const example = {
-    ...initialProfile,
-    name: "Alex Morgan", title: shared("role"), summary: shared("introduction"),
-    experience: [{ ...emptyEntry, title: shared("role"), detail: shared("sampleWork") }],
-    skills: shared("sampleSkills").split(",").map((part) => part.trim()),
-  };
+  const example = sampleProfile(choice.language);
 
   return <details className="cv-gallery cv-repeat" onToggle={(event) => setExpanded(event.currentTarget.open)}>
     <summary>{t("templates")} <span>({templates.length})</span></summary>

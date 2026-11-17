@@ -78,7 +78,7 @@ export async function POST(request:Request) {
       if(error)throw new Error("Data export failed."); packs.push(...data);
     }
     const account=identity.data.user;
-    const payload={exportedAt:new Date().toISOString(),account:{id,email:account?.email,createdAt:account?.created_at},
+    const payload={exportedAt:new Date().toISOString(),account:{id,email:account?.email,phone:account?.phone,createdAt:account?.created_at},
       data:Object.fromEntries([...tables,...privateRows]),applications:packs,
       photo:input.format==="json"?photo.photo?.jpeg_base64??null:photo.photo?"portrait.jpg":null};
     const json=Buffer.from(JSON.stringify(payload,null,2));

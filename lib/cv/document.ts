@@ -47,6 +47,6 @@ export function renderCv(profile: Profile, choice: CvChoice, template: Template,
   const body = columns ? `<div class="cv-doc-columns"><div>${primary}</div><div class="cv-aside">${secondary}</div></div>`
     : `<div class="cv-doc-linear">${primary}${secondary}</div>`;
 
-  return `<article class="cv-sheet cv-layout-${template.layout} cv-head-${template.header} cv-label-${template.heading} cv-type-${template.typography} cv-paper-${choice.paper}"
+  return `<article class="cv-sheet cv-layout-${template.layout} cv-head-${template.header} cv-label-${template.heading} cv-type-${template.typography} cv-color-${template.color} cv-paper-${choice.paper}"
     lang="${choice.language}" style="--cv-accent:${template.accent}">${header}${body}</article>`;
 }

@@ -6,12 +6,12 @@ import { Redis } from "@upstash/redis";
 import { headers } from "next/headers";
 import { readEnv } from "@/lib/env";
 
-type Scope = "login" | "signup" | "oauth" | "admin" | "editorial" | "mfa" | "cv" | "portrait" | "pdf" | "application" | "billing" | "privacy";
+type Scope = "otp-send" | "otp-verify" | "oauth" | "admin" | "editorial" | "mfa" | "cv" | "portrait" | "pdf" | "application" | "billing" | "privacy";
 const spanMs = 10 * 60 * 1000;
 const localWindows = new Map<string, { count: number; expires: number }>();
-const limits = { login: 10, signup: 5, oauth: 10, admin: 30, editorial: 80, mfa: 12, cv: 180, portrait: 15, pdf: 20, application: 30, billing: 15, privacy: 8 } as const;
+const limits = { "otp-send": 5, "otp-verify": 12, oauth: 10, admin: 30, editorial: 80, mfa: 12, cv: 180, portrait: 15, pdf: 20, application: 30, billing: 15, privacy: 8 } as const;
 
-export async function allowAuthAttempt(scope: Scope, email?: string) {
+export async function allowAuthAttempt(scope: Scope, subject?: string) {
   const env = readEnv();
   const requestHeaders = await headers();
   const ip = env.TRUSTED_IP_HEADER
@@ -19,7 +19,7 @@ export async function allowAuthAttempt(scope: Scope, email?: string) {
     : "127.0.0.1";
   if (!ip || !isIP(ip)) return false;
   const identities = ["ip:" + ip];
-  if (email) identities.push("email:" + email.toLowerCase());
+  if (subject) identities.push("subject:" + subject.toLowerCase());
   const keys = identities.map((value) => scope + ":" + createHash("sha256").update(value).digest("hex"));
   const redisUrl = env.UPSTASH_REDIS_REST_URL;
   const redisToken = env.UPSTASH_REDIS_REST_TOKEN;

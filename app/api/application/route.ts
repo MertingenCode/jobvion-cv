@@ -6,12 +6,12 @@ import { serviceSupabase } from "@/lib/supabase/admin";
 import { readEnv } from "@/lib/env";
 import { allowAuthAttempt } from "@/lib/auth/rate-limit";
 import { applicationEvidence,buildApplication,groundReport,reportMatches,reportSchema,selectionSchema,stripContact } from "@/lib/application/model";
-import { analysisPrompt,tailoringPrompt } from "@/lib/application/prompts";
+import { analysisPrompt,letterPrompt,tailoringPrompt } from "@/lib/application/prompts";
 import { BudgetLimit,jsonCompletion,llmConfig } from "@/lib/application/llm";
 
 const mutations=z.discriminatedUnion("operation",[
   z.strictObject({operation:z.literal("analyze"),text:z.string().trim().min(80).max(16000)}),
-  z.strictObject({operation:z.literal("generate"),id:z.uuid(),request:z.uuid(),language:cvLocale,regenerate:z.boolean()}),
+  z.strictObject({operation:z.literal("generate"),id:z.uuid(),request:z.uuid(),language:cvLocale,regenerate:z.boolean(),focus:z.enum(["application","letter"]).default("application")}),
   z.strictObject({operation:z.literal("edit"),id:z.uuid(),cover:z.string().trim().min(1).max(8000)}),
 ]);
 
@@ -72,12 +72,13 @@ export async function POST(request:Request) {
     if(state.state!=="started")return cvError(state.state,state.state==="noCredits"?402:409);
     const finish=(value:unknown)=>db.rpc("finish_application",{p_user:session.id,p_job:input.id,p_request:input.request,p_output:value});
     try {
-      const selection=await jsonCompletion(session.id,"tailoring",tailoringPrompt,{
+      const letter = input.focus === "letter";
+      const selection=await jsonCompletion(session.id,letter ? "cover-letter" : "tailoring",letter ? letterPrompt : tailoringPrompt,{
         job:{role:stripContact(report.position,profile),required:report.required.map(x=>stripContact(x,profile))},
-        skills:profile.skills.map((text,index)=>({index,text:stripContact(text,profile)})),
-        experience:applicationEvidence(profile).map((text,index)=>({index,text:stripContact(text,profile).slice(0,500)})),
+        skills:letter ? [] : profile.skills.map((text,index)=>({index,text:stripContact(text,profile)})),
+        experience:applicationEvidence(profile,input.focus).map((text,index)=>({index,text:stripContact(text,profile).slice(0,500)})),
       },selectionSchema,state.run);
-      const result={...buildApplication(profile,report,selection,input.language),language:input.language};
+      const result={...buildApplication(profile,report,letter ? { ...selection, skills:[], experience:[] } : selection,input.language,input.focus),language:input.language};
       if((await finish(result)).error)throw new Error("Application could not be persisted");
       return cvJson(result);
     }catch(error){

@@ -19,9 +19,11 @@ supabase start
 supabase status
 ```
 
-Set the public Supabase URL and publishable key in `.env.local` from the local stack. Apply the migration and seed with `supabase db reset` **only against a disposable local stack**, then restart Next.js. Find confirmation messages in the local Mailpit inbox shown by `supabase status`.
+Set the public Supabase URL and publishable key in `.env.local` from the local stack. Apply the migration and seed with `supabase db reset` **only against a disposable local stack**, then restart Next.js. Find one-time codes in the local Mailpit inbox shown by `supabase status`.
 
-For Google OAuth, enable the Google provider and set the two Google environment values referenced by `supabase/config.toml`. In a hosted Supabase project, set the site URL, allow the callback URL for each locale, install `supabase/templates/confirmation.html` as the confirmation template, and configure the Google client and its Supabase callback. Use a nonproduction project and synthetic accounts for validation.
+For hosted Supabase, allow the localized OAuth callback, enable Google and Apple in Auth Providers, and configure each provider's client and Supabase callback. For Apple web OAuth, use the Apple Services ID and rotate its client secret before the expiration shown in the Apple Developer setup.
+
+Set both Auth email templates (Confirm sign up and Magic link or OTP) to `supabase/templates/one-time-code.html`, and use six-digit codes. Configure production SMTP. For SMS, enable Phone in Auth Providers, add a supported SMS provider, and configure CAPTCHA, rate limits and SMS delivery. Validate each sign-in method in staging using synthetic accounts.
 
 A nonlocal deployment requires an HTTPS `APP_ORIGIN`, configured Supabase and Upstash, and a request header that the trusted ingress overwrites with the client IP. Set `SENTRY_DSN` to enable server monitoring. The server sends generic errors without request details, cookies, bodies or personal fields.
 
@@ -92,7 +94,7 @@ To verify real text order with running Chrome, install or use a Python environme
 
 1. Apply all Supabase migrations. Start the private PDF renderer and configure the shared renderer token before enabling PDF download or ZIP data export.
 2. Set an OpenAI-compatible HTTPS base URL, API key, model and current input/output USD token rates. The cap is measured in microdollars. For example, 1000000 represents USD 1. Each provider attempt reserves a conservative amount until the next UTC day. Alert on budget warnings in the deployment logs.
-3. In Cloudflare, create a Turnstile widget for the application host. Set its public site key in Jobvion. In Supabase Auth Bot and Abuse Protection, enable Turnstile with the matching secret. This enables checks on signup and email/password login.
+3. In Cloudflare, create a Turnstile widget for the application host. Set its public site key in Jobvion. In Supabase Auth Bot and Abuse Protection, enable Turnstile with the matching secret. This enables checks on email and SMS code requests.
 4. In Paddle, configure the approved HTTPS checkout domain and an HTTPS default payment URL ending in /en/checkout. Create the 15, 40 and 100 credit prices at USD 4.99, 9.99 and 19.99. Load their IDs and run the command below. A credit package adds application credits. Premium template entitlement is managed separately.
 5. In Paddle, configure the notification destination /api/billing/webhook with transaction.completed, adjustment.created and adjustment.updated. Copy that destination’s signing secret to the environment. Verify buyer receipts and refund notices using the configured seller account.
 6. Schedule authenticated POST requests to /api/internal/maintenance using the maintenance bearer secret, and to /api/internal/publish-blog using the blog bearer secret. Maintenance reverses abandoned first-use application runs, clears expired Paddle event payloads and processes due account deletions. CV photos and blog covers are stored inline in PostgreSQL, so there is no separate object-storage cleanup job.

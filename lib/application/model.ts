@@ -63,8 +63,11 @@ export function reportMatches(report: JobReport, profile: Profile) {
   });
 }
 
-export function applicationEvidence(profile: Profile) {
-  return profile.experience.map(({title,detail}) => detail.trim() || title.trim());
+export type ApplicationFocus = "application" | "letter";
+
+export function applicationEvidence(profile: Profile, focus: ApplicationFocus = "application") {
+  const entries = focus === "letter" ? [...profile.experience, ...profile.projects, ...profile.education] : profile.experience;
+  return entries.map(({ title, detail }) => detail.trim() || title.trim());
 }
 
 function reorder<T>(items: T[], proposed: number[]) {
@@ -74,10 +77,10 @@ function reorder<T>(items: T[], proposed: number[]) {
   return [...proposed.map((index) => items[index]), ...items.filter((_, index) => !proposed.includes(index))];
 }
 
-export function buildApplication(profile: Profile, report: JobReport, selected: Selection, locale: Locale) {
+export function buildApplication(profile: Profile, report: JobReport, selected: Selection, locale: Locale, focus: ApplicationFocus = "application") {
   const tailored = { ...profile, skills: reorder(profile.skills, selected.skills),
     experience: reorder(profile.experience, selected.experience) };
-  const evidence = applicationEvidence(profile);
+  const evidence = applicationEvidence(profile, focus);
   if (new Set(selected.evidence).size !== selected.evidence.length ||
       selected.evidence.some((index) => index < 0 || !evidence[index])) throw new Error("Invalid letter reference.");
   const copy = applicationCopy[locale];

@@ -30,10 +30,25 @@ minimum_password_length = 8
 [auth.email]
 enable_signup = true
 enable_confirmations = true
+otp_length = 6
 
 [auth.email.template.confirmation]
 subject = "Jobvion"
-content_path = "./supabase/templates/confirmation.html"
+content_path = "./supabase/templates/one-time-code.html"
+
+[auth.email.template.magic_link]
+subject = "Jobvion"
+content_path = "./supabase/templates/one-time-code.html"
+
+[auth.sms]
+enable_signup = true
+enable_confirmations = true
+template = "Jobvion: {{ .Code }}"
+
+[auth.external.apple]
+enabled = false
+client_id = "env(SUPABASE_AUTH_EXTERNAL_APPLE_CLIENT_ID)"
+secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
 
 [auth.external.google]
 enabled = false

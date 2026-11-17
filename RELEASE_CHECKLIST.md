@@ -2,7 +2,7 @@
 
 - Apply pending Supabase migrations in staging, then deploy the web app and private PDF worker.
 - Set the Paddle environment, approved checkout URL, seller credentials, package prices and signed webhook destination. Verify sandbox purchase and refund with real provider events.
-- Verify email confirmation, Google OAuth, Turnstile, application generation and the PDF worker with configured staging services.
+- Verify email and SMS one-time codes, Google and Apple OAuth, Turnstile, application generation and the PDF worker with configured staging services.
 - Add scheduled POST requests for publication and maintenance. Verify retry alerts and clock behavior.
 - Review the English and Turkish legal drafts, document processor agreements and transfer arrangements, and confirm the rights request and incident channels.
 - Provision the first admin owner using the bootstrap script. Confirm MFA and review role assignments. Review draft blog articles before editorial publication.
@@ -21,7 +21,7 @@
 
 | Data | Store or recipient | Deletion or retention |
 | --- | --- | --- |
-| Authentication identity and locale | Supabase Auth, Google if the user selects Google login | Auth deletion removes the account. Confirm provider-side retention and backups. |
+| Authentication identity and locale | Supabase Auth, Google or Apple if selected, configured SMS provider for phone codes | Auth deletion removes the account. Confirm provider-side retention and backups. |
 | Profile, saved CVs, normalized portrait, job analyses and application packs | Supabase PostgreSQL | Account deletion cascades to these rows. Photo originals are discarded after processing. |
 | Requested PDF snapshot and optional portrait | Private Chromium renderer | Rendered in memory. Confirm production log scrubbing and worker region. |
 | Job text, selected profile evidence and skills | Configured LLM provider | Contact fields are masked. Confirm actual provider terms, region and retention before activation. |
