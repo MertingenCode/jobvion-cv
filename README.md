@@ -47,3 +47,21 @@ npm run test:db
 The database tests cover row isolation, concurrent spending, idempotency, reversal, monthly renewal and partial refunds. The initial credit schema was written from the attached specification. Free credits reset at the beginning of each UTC calendar month. Partial refunds compute the cumulative proportional entitlement and deduct only the unspent balance of the refunded pack. Package seeds have no Paddle price IDs until sandbox prices are configured.
 
 The CV on the public pages is a localized sample. The profile editor, template engine and PDF export start in Phase 2.
+
+## Admin and blog
+
+Apply the migrations to your Supabase project. In a disposable local stack, the seed loads five English drafts. For an existing database, run `supabase/blog-drafts.sql` with a privileged connection to add the same drafts without replacing edits. Review the articles before publishing.
+
+Sign up and confirm the first owner account. Copy its user UUID from Supabase Authentication, set the server-only service key in `.env.local`, and run:
+
+```powershell
+npm run admin:bootstrap -- --user <confirmed-auth-user-uuid> --confirm
+```
+
+Sign in, open `/tr/admin` (or `/en/admin`), and use a TOTP authenticator. Keep Supabase MFA enrollment and verification enabled. The owner assigns the other roles from **Roles**. Editors write and send posts for review. Owners and administrators publish, schedule, unpublish, archive and restore. Review precedes publication. A public article must be published, including its sitemap entry and language alternates.
+
+Schedule an authenticated `POST /api/internal/publish-blog` every minute on your hosting scheduler. Send `Authorization: Bearer <BLOG_CRON_SECRET>` from the scheduler secret store. The app uses `SUPABASE_SERVICE_ROLE_KEY` to run the worker. Until the scheduler is connected, **Publish** works manually and future-dated posts remain scheduled. Scheduled dates are entered in UTC.
+
+Admin reports use data already recorded in accounts, the credit ledger, purchases, generation runs and LLM call logs. The date filters use rolling UTC periods. Finance groups currencies and reports refunds against the original order period. Provider cost comes from recorded USD call costs. Promotional-credit adjustments require a separate ledger design and expiration policy.
+
+Run `npm run test:db` against a disposable migrated database to verify role enforcement, MFA gating, revision conflicts, draft privacy and scheduled publishing. Run `npm run test:e2e` to verify the public routes, access denial and sitemap.

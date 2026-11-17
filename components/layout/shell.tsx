@@ -14,6 +14,7 @@ export function Shell({ locale, theme, signedIn, children }: {
   children: ReactNode;
 }) {
   const t = useTranslations();
+  const blog = useTranslations("blog");
   return (
     <>
       <a href="#content" className="skip-link">{t("skip")}</a>
@@ -38,6 +39,7 @@ export function Shell({ locale, theme, signedIn, children }: {
       <footer className="site-footer">
         <div className="container footer-row">
           <span>Jobvion</span>
+          <Link className="blog-link" href={`/${locale}/blog`}>{blog("title")}</Link>
           <span>{t("copyright")}</span>
         </div>
       </footer>

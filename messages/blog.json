@@ -1,0 +1,74 @@
+{
+  "en": {
+    "title": "Blog",
+    "summary": "Practical advice for writing a CV and applying for jobs.",
+    "empty": "No articles in this language yet.",
+    "english": "Read the English blog",
+    "unavailable": "Articles are temporarily unavailable.",
+    "back": "Back to the blog",
+    "by": "By {author}"
+  },
+  "tr": {
+    "title": "Blog",
+    "summary": "CV hazırlama ve iş başvuruları için uygulanabilir öneriler.",
+    "empty": "Bu dilde henüz yazı yok.",
+    "english": "İngilizce blogu oku",
+    "unavailable": "Yazılara şu anda erişilemiyor.",
+    "back": "Bloga dön",
+    "by": "Yazar {author}"
+  },
+  "de": {
+    "title": "Blog",
+    "summary": "Praktische Tipps für Lebenslauf und Bewerbungen.",
+    "empty": "In dieser Sprache gibt es noch keine Artikel.",
+    "english": "Englischen Blog lesen",
+    "unavailable": "Artikel sind vorübergehend nicht verfügbar.",
+    "back": "Zurück zum Blog",
+    "by": "Von {author}"
+  },
+  "fr": {
+    "title": "Blog",
+    "summary": "Des conseils pratiques pour rédiger un CV et postuler.",
+    "empty": "Il n’y a pas encore d’articles dans cette langue.",
+    "english": "Lire le blog en anglais",
+    "unavailable": "Les articles sont temporairement indisponibles.",
+    "back": "Retour au blog",
+    "by": "Par {author}"
+  },
+  "es": {
+    "title": "Blog",
+    "summary": "Consejos prácticos para redactar un CV y solicitar empleo.",
+    "empty": "Todavía no hay artículos en este idioma.",
+    "english": "Leer el blog en inglés",
+    "unavailable": "Los artículos no están disponibles temporalmente.",
+    "back": "Volver al blog",
+    "by": "Por {author}"
+  },
+  "it": {
+    "title": "Blog",
+    "summary": "Consigli pratici per scrivere un CV e candidarsi.",
+    "empty": "Non ci sono ancora articoli in questa lingua.",
+    "english": "Leggi il blog in inglese",
+    "unavailable": "Gli articoli non sono temporaneamente disponibili.",
+    "back": "Torna al blog",
+    "by": "Di {author}"
+  },
+  "pt": {
+    "title": "Blog",
+    "summary": "Conselhos práticos para escrever um CV e candidatar-se.",
+    "empty": "Ainda não existem artigos neste idioma.",
+    "english": "Ler o blog em inglês",
+    "unavailable": "Os artigos estão temporariamente indisponíveis.",
+    "back": "Voltar ao blog",
+    "by": "Por {author}"
+  },
+  "nl": {
+    "title": "Blog",
+    "summary": "Praktische tips voor het schrijven van een cv en solliciteren.",
+    "empty": "Er zijn nog geen artikelen in deze taal.",
+    "english": "Lees de Engelstalige blog",
+    "unavailable": "De artikelen zijn tijdelijk niet beschikbaar.",
+    "back": "Terug naar het blog",
+    "by": "Door {author}"
+  }
+}

@@ -225,3 +225,23 @@ h1 {
   .spinner { animation: none; }
   .button:active { transform: none; }
 }
+
+.blog-index, .article-layout { padding-block: 2.5rem 5rem; }
+.article-layout { width: min(100% - 3rem, 45rem); margin-inline: auto; }
+.studio .article-layout { width: min(100%, 45rem); margin-inline: 0; }
+.blog-index h1, .article-layout h1 { font-size: clamp(2.6rem, 5vw, 4.5rem); line-height: 1.04; }
+.article-layout h1 { margin-block-start: .75rem; }
+.article-layout .lede { max-width: 55ch; }
+.blog-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-primary); text-underline-offset: .2em; }
+.blog-link:hover, .blog-rows a:hover { text-decoration: underline; }
+.blog-rows { margin-block: 1.25rem; max-width: 50rem; padding: 0; list-style: none; }
+.blog-rows li { padding-block: 1.15rem; border-block-start: 1px solid var(--color-rule); }
+.blog-rows h2 { font-size: 1.7rem; }
+.blog-rows h2 a { display: inline-flex; align-items: center; min-height: 44px; }
+.blog-rows time, .article-meta { font-size: .9375rem; color: var(--color-muted); }
+.article-meta { padding-block-end: 1.35rem; border-bottom: 1px solid var(--color-rule); }
+.article-meta time { margin-inline-start: .65rem; }
+.article-copy { display: grid; gap: 1.05rem; margin-block: 1.6rem; overflow-wrap: anywhere; }
+.article-copy h2 { font-size: 1.75rem; line-height: 1.25; margin-block-start: .6rem; }
+.article-copy ul { padding-inline-start: 1.4rem; list-style: disc; }
+.article-copy li + li { margin-block-start: .5rem; }

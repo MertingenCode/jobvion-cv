@@ -13,6 +13,7 @@ const schema = z.object({
   UPSTASH_REDIS_REST_URL: optional(z.url()),
   UPSTASH_REDIS_REST_TOKEN: optional(z.string().min(1)),
   SENTRY_DSN: optional(z.url()),
+  BLOG_CRON_SECRET: optional(z.string().min(32)),
 });
 
 export function readEnv() {

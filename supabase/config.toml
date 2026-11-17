@@ -11,7 +11,7 @@ major_version = 17
 
 [db.seed]
 enabled = true
-sql_paths = ["./seed.sql"]
+sql_paths = ["./seed.sql", "./blog-drafts.sql"]
 
 [studio]
 enabled = true
@@ -39,3 +39,7 @@ content_path = "./supabase/templates/confirmation.html"
 enabled = false
 client_id = "env(SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID)"
 secret = "env(SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET)"
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true

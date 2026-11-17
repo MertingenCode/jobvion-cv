@@ -6,10 +6,10 @@ import { Redis } from "@upstash/redis";
 import { headers } from "next/headers";
 import { readEnv } from "@/lib/env";
 
-type Scope = "login" | "signup" | "oauth";
+type Scope = "login" | "signup" | "oauth" | "admin" | "editorial" | "mfa";
 const spanMs = 10 * 60 * 1000;
 const localWindows = new Map<string, { count: number; expires: number }>();
-const limits = { login: 10, signup: 5, oauth: 10 } as const;
+const limits = { login: 10, signup: 5, oauth: 10, admin: 30, editorial: 80, mfa: 12 } as const;
 
 export async function allowAuthAttempt(scope: Scope, email?: string) {
   const env = readEnv();
