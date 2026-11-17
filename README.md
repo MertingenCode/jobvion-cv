@@ -65,3 +65,25 @@ Schedule an authenticated `POST /api/internal/publish-blog` every minute on your
 Admin reports use data already recorded in accounts, the credit ledger, purchases, generation runs and LLM call logs. The date filters use rolling UTC periods. Finance groups currencies and reports refunds against the original order period. Provider cost comes from recorded USD call costs. Promotional-credit adjustments require a separate ledger design and expiration policy.
 
 Run `npm run test:db` against a disposable migrated database to verify role enforcement, MFA gating, revision conflicts, draft privacy and scheduled publishing. Run `npm run test:e2e` to verify the public routes, access denial and sitemap.
+
+## CV workspace
+
+Apply the CV migration with the existing Supabase migrations, sign in and open `/tr/app/cv` or `/en/app/cv`. The editor autosaves the structured profile. Saving a CV creates a separate snapshot of the text and document settings. The selected CV language is independent of the application language.
+
+The catalog contains 30 templates. Accounts without a server-backed template entitlement can preview the catalog and save or export Essential, Compact and Executive. Premium entitlement is backed by `cv_template_entitlements` and is independent of generation credits. This phase does not connect an entitlement sale or a subscription.
+
+Photo-enabled templates can use the current profile photo. Uploads accept JPEG, PNG or WebP up to 4 MB and use `SUPABASE_SERVICE_ROLE_KEY` on the server to write the normalized JPEG. The original upload is discarded. Changing or removing the profile photo affects future exports from saved documents that had the photo enabled. Public URLs are never assigned to photos.
+
+### PDF renderer
+
+Run the renderer as a separate private service with the same `PDF_RENDERER_TOKEN` configured on the app and the worker. Set `PDF_RENDERER_URL` in the app to the worker origin, such as `http://127.0.0.1:4025` locally. The token needs at least 32 characters.
+
+For local development, use installed Chrome by setting `$env:PDF_CHROMIUM_CHANNEL = 'chrome'`, then run `npm run pdf:dev`. For the production image:
+
+```powershell
+docker build -f services/pdf-renderer/Dockerfile -t jobvion-pdf .
+```
+
+Deploy the image to a private network reachable only from the application. Keep Chromium sandboxing enabled, give the container a writable temporary directory, and use a host seccomp policy that permits Chromium's user namespaces if the default blocks them. Limit container CPU and memory. The renderer blocks external network requests per browser context and reads fonts and portraits from in-memory data URLs.
+
+To verify real text order with running Chrome, install or use a Python environment containing `pypdf`. Set `JOBVION_PDF_TEST_PYTHON` to its executable alongside the renderer URL and token, then run `npm run test:pdf`. The test exports multi-page Turkish and German ATS documents, checks page sizes and heading order, and compares a premium layout with and without a photo.

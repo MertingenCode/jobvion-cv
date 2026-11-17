@@ -13,8 +13,10 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "test:db": "vitest run tests/credits.integration.test.ts tests/admin-blog.integration.test.ts",
-    "admin:bootstrap": "node --env-file-if-exists=.env.local scripts/bootstrap-owner.mjs"
+    "test:db": "vitest run tests/credits.integration.test.ts tests/admin-blog.integration.test.ts tests/cv.integration.test.ts",
+    "admin:bootstrap": "node --env-file-if-exists=.env.local scripts/bootstrap-owner.mjs",
+    "pdf:dev": "node --env-file-if-exists=.env.local services/pdf-renderer/server.mjs",
+    "test:pdf": "vitest run tests/cv-pdf.integration.test.ts"
   },
   "dependencies": {
     "@fontsource-variable/funnel-display": "5.3.0",
@@ -30,9 +32,11 @@
     "lucide-react": "1.74.0",
     "next": "16.4.6",
     "next-intl": "4.15.1",
+    "playwright-core": "1.65.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "server-only": "0.0.1",
+    "sharp": "0.35.5",
     "tailwind-merge": "3.7.0",
     "zod": "4.6.7"
   },

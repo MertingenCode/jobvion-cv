@@ -1,0 +1,5 @@
+**
+!services/
+!services/pdf-renderer/
+!services/pdf-renderer/Dockerfile
+!services/pdf-renderer/server.mjs

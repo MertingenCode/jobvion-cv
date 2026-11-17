@@ -5,6 +5,7 @@ const config: NextConfig = {
   agentRules: false,
   devIndicators: false,
   poweredByHeader: false,
+  outputFileTracingIncludes: { "/api/cv/pdf": ["./public/fonts/inter-4.1-cv.woff2"] },
   images: { dangerouslyAllowSVG: false },
   async headers() {
     return [{

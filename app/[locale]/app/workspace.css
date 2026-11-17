@@ -1,0 +1,63 @@
+/* Hallmark · shape: app screen · theme: Refract · signature: the live document */
+/* Critique: the editing controls sit on the shell, and the CV reads as a printed page. */
+.cv-workspace { padding-block: 2.25rem 4rem; }
+.cv-workspace > h1 { font-size: 2.6rem; margin-block: .5rem 1.75rem; text-wrap: balance; line-height: 1.08; }
+.cv-workspace h2:not(.cv-sheet h2) { font-size: 1.45rem; text-wrap: balance; }
+.cv-editor-grid { display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); gap: clamp(1rem, 3vw, 2.75rem); }
+.cv-editor-form, .cv-editor-preview { min-width: 0; }
+.cv-editor-form > .cv-toolbar, .cv-editor-preview > h2 { margin-block-end: .9rem; }
+.cv-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: .4rem .75rem; }
+.cv-heading-row { justify-content: space-between; }
+.cv-fields { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; gap: .85rem; }
+.cv-fields textarea { resize: vertical; }
+.cv-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
+.cv-field-grid .field { min-width: 0; }
+.cv-muted { font-size: .9rem; color: var(--color-muted); overflow-wrap: anywhere; }
+.cv-photo-controls { display: grid; gap: .3rem; }
+.cv-file-input { cursor: pointer; font-size: .9rem; }
+.cv-check { display: flex; align-items: center; gap: .45rem; min-height: 44px; }
+.cv-check input { height: 1.1rem; width: 1.1rem; accent-color: var(--color-primary); }
+.cv-tag { border: 1px solid var(--color-rule); padding: .12rem .65rem; border-radius: var(--radius-pill); font-size: .875rem; }
+.cv-ats-tag { color: var(--color-success); }
+.cv-design-tag { color: var(--color-warning); }
+.cv-preview-viewport {
+  position: relative; overflow: clip; contain: inline-size; width: 100%; min-width: 0; border: 1px solid var(--color-rule);
+  box-shadow: var(--shadow-card);
+}
+.cv-preview-page { transform-origin: top left; width: max-content; }
+.cv-repeat { border-top: 1px solid var(--color-rule); padding-block: .35rem .65rem; }
+.cv-repeat summary { min-height: 44px; cursor: pointer; padding-block: .55rem; font-weight: 600; }
+.cv-repeat summary:active { color: var(--color-primary); }
+.cv-repeat summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+.cv-repeat summary span { margin-inline-start: .3rem; color: var(--color-muted); font-weight: 400; }
+.cv-repeat .cv-fields > .button, .cv-entry-fields .button { justify-self: start; }
+.cv-entry-fields { display: grid; margin-block: .3rem .6rem; gap: .65rem; border: 1px solid var(--color-rule); padding: .6rem; border-radius: var(--radius-inner); }
+.cv-entry-fields legend { padding-inline: .4rem; color: var(--color-muted); font-size: .9rem; }
+.cv-gallery { margin-block: 2rem; }
+.cv-filter {
+  min-height: 44px; padding: .4rem .8rem; border: 1px solid var(--color-rule); border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+.cv-filter[aria-pressed="true"] { color: var(--color-primary); border-color: var(--color-primary); }
+.cv-filter:active { background: var(--color-surface); }
+.cv-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: .7rem; margin-block: .5rem; }
+.cv-gallery-card {
+  width: 100%; min-height: 44px; display: grid; gap: .24rem; overflow: clip; padding: .55rem; border: 1px solid var(--color-rule);
+  text-align: start; border-radius: var(--radius-inner); background: var(--color-surface); cursor: pointer;
+}
+.cv-gallery-card[aria-pressed="true"], .cv-gallery-card:hover, .cv-gallery-card:active { border-color: var(--color-primary); }
+.cv-gallery-card > span { color: var(--color-muted); font-size: .805rem; }
+.cv-thumb { overflow: clip; pointer-events: none; height: 140px; border: 1px solid var(--color-rule); }
+.cv-thumb > div { transform: scale(.19); transform-origin: top left; width: max-content; }
+.cv-saved { margin-top: 2rem; }
+.cv-saved li { display: flex; flex-wrap: wrap; gap: .25rem 1rem; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-rule); }
+.cv-saved a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-primary); text-decoration: underline; }
+.cv-saved li span { color: var(--color-muted); font-size: .9rem; }
+.cv-preview-saved { display: grid; grid-template-columns: minmax(0, 1fr); gap: .8rem; max-width: 795px; }
+@media (max-width: 760px) {
+  .cv-editor-grid { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+}
+@media (max-width: 420px) {
+  .cv-field-grid { grid-template-columns: minmax(0, 1fr); }
+  .cv-workspace > h1 { font-size: 2.25rem; }
+}

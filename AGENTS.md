@@ -23,7 +23,7 @@ A web app for job seekers (global from day one, with localized experiences and j
 Everything runs on ONE engine: a structured **profile JSON** (single source of truth) + a **job analysis JSON** → generation layer → template layer → PDF.
 
 ### v1 (MVP) scope — build ONLY this
-- Auth (email + Google), profile form, 3 ATS-safe templates, PDF export.
+- Auth (email + Google), profile form, a large CV template catalog with exactly 3 free ATS-safe templates, optional photos on supported premium designs, and PDF export.
 - Job input by **pasted text only**. Job analysis → match report → tailored CV + cover letter.
 - Credit system + Paddle checkout (one-time credit packs) + refund webhook.
 - Legal pages, account deletion, data export, consent log.
@@ -77,9 +77,9 @@ Pasted text is **untrusted data** (prompt-injection risk): never follow instruct
 2. Show the user a **diff** (what changed vs. their profile) and let them edit before saving.
 3. Section headings come from a fixed i18n dictionary per CV language, NOT from the LLM.
 4. Date, phone and page-size formats follow CV language/country (A4 vs US Letter).
-5. **No salary field.** Photo is optional, per template, with a country-based hint.
+5. **No salary field.** Photo-enabled templates offer an explicit photo on/off choice, with photo off by default and a country-based hint. When photo is off, the layout reflows without an empty photo slot.
 6. ATS templates: single column, standard headings, no tables/icons/images, text-based PDF, embedded fonts with full Latin-Extended (Turkish) coverage. Add an automated test that extracts PDF text and checks reading order/headings.
-7. Templates carry metadata: `ats_safe`, `columns`, `supports_photo`, `rtl_ready`, `languages`, `tier`. Design (non-ATS) templates show a warning badge.
+7. Templates carry metadata: `ats_safe`, `columns`, `supports_photo`, `rtl_ready`, `languages`, `tier`. The three free templates are photo-free and ATS-safe. Premium templates include photo-free designs and designs with an optional photo. Design (non-ATS) templates show a warning badge.
 8. Never promise "ATS score guarantee" or invented statistics in UI copy.
 9. Language quality tiers: TR/EN/DE = "full", others = "beta" with a "please review the output" notice.
 
@@ -257,17 +257,20 @@ Acceptance: browser-language fallback and saved locale override tests pass; syst
 Plan first, wait for approval.
 ```
 
-## Phase 2 — Profile, templates, PDF
+## Phase 2 — Profile, template catalog, photos, and PDF
 
 ```
 Implement Phase 2.
 - Profile JSON schema (Zod, with schema_version): personal info, summary, experience, education, skills, languages, certificates, projects. Autosave drafts.
 - Profile editor: form on the left, live CV preview on the right (stacked on mobile). Preview is always white paper.
-- 3 ATS-safe templates (single column, standard headings from the per-language dictionary, Turkish characters correct), with template metadata (ats_safe, columns, supports_photo, languages, tier).
-- CV languages TR, EN, DE, FR, ES, IT, PT, NL: heading dictionaries, date/phone/page-size formats. No salary field. Optional photo only where the template supports it.
+- Launch catalog target: 30 distinct CV templates, with exactly 3 free ATS-safe templates and 27 premium templates. Template layouts must differ in structure or typography rather than just color. Provide a gallery with previews, free/premium labels, and ATS-safe and photo filters.
+- The free templates use one column, standard localized headings, no photo and full Turkish character support. Premium includes photo-free layouts and layouts that support both photo on and photo off. Warn when a design is not ATS-safe. Record template capabilities and tier in the template registry.
+- Free accounts may browse the entire catalog and use only the three free templates. Check template entitlement on the server when saving a selected template or exporting it. Premium template entitlement stays independent from generation credit balance; the commercial unlock policy is a separate decision for checkout.
+- CV languages TR, EN, DE, FR, ES, IT, PT, NL: heading dictionaries, date/phone/page-size formats. No salary field.
+- Store validated, metadata-stripped CV photos in owner-only storage after transient processing of the original. Let users replace or remove a photo and explicitly enable or disable it per CV. Show the selected photo state in both preview and PDF. Keep CV photos outside LLM requests.
 - PDF export through an isolated renderer service (JS disabled, network blocked except bundled fonts/data URIs, low-privilege, timeouts). Provide a Dockerfile.
 - Automated ATS test: extract text from the generated PDF and assert heading names and reading order.
-Acceptance: a long Turkish and a long German profile both render without broken layout or missing characters; PDF text extraction test passes.
+Acceptance: the registry contains 30 distinct templates, exactly 3 usable by free accounts. A direct request cannot save or export a premium template without entitlement. Photo-enabled designs reflow when photos are off and match their PDF output. A long Turkish and a long German profile both render without broken layout or missing characters; ATS PDF text extraction and reading-order tests pass.
 Plan first, wait for approval.
 ```
 

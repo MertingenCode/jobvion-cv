@@ -5,6 +5,7 @@ import { useId, useSyncExternalStore, type ReactNode } from "react";
 import { Check, ChevronDown, Globe2, Monitor } from "lucide-react";
 import { localeNames, locales, type Locale } from "@/i18n/config";
 import { selectLocale, selectTheme } from "@/lib/security/actions";
+import { saveBeforeLocaleChange } from "@/lib/cv/client";
 import { themes, type Theme } from "@/lib/security/preferences";
 
 const subscribeToHydration = () => () => {};
@@ -35,12 +36,18 @@ function PreferenceSelect({ label, name, value, action, apply, children, icon, i
           key={value}
           name={name}
           defaultValue={value}
-          onChange={(event) => {
+          onChange={async (event) => {
+            const select = event.currentTarget;
+            const form = select.form;
             if (includePath) {
-              const field = event.currentTarget.form?.elements.namedItem("path");
+              if (!await saveBeforeLocaleChange()) {
+                select.value = value;
+                return;
+              }
+              const field = form?.elements.namedItem("path");
               if (field instanceof HTMLInputElement) field.value = pathname + window.location.search;
             }
-            event.currentTarget.form?.requestSubmit();
+            form?.requestSubmit();
           }}
         >
           {children}

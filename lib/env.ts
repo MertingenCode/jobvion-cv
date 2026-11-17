@@ -14,6 +14,8 @@ const schema = z.object({
   UPSTASH_REDIS_REST_TOKEN: optional(z.string().min(1)),
   SENTRY_DSN: optional(z.url()),
   BLOG_CRON_SECRET: optional(z.string().min(32)),
+  PDF_RENDERER_URL: optional(z.url().refine((value) => /^https?:\/\//.test(value))),
+  PDF_RENDERER_TOKEN: optional(z.string().min(32)),
 });
 
 export function readEnv() {
@@ -23,6 +25,9 @@ export function readEnv() {
   }
 
   const env = result.data;
+  if (Boolean(env.PDF_RENDERER_URL) !== Boolean(env.PDF_RENDERER_TOKEN)) {
+    throw new Error("Configure both PDF renderer values");
+  }
   const origin = new URL(env.APP_ORIGIN);
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(origin.hostname);
   if (origin.origin !== env.APP_ORIGIN || (!local && origin.protocol !== "https:")) {
