@@ -20,7 +20,7 @@ export default async function LegalPage({params}:Props){
     {page==="privacy"&&<ul lang="en" className="release-list">{processors.map((processor)=><li key={processor.system}>
       <strong>{processor.system}</strong><p>{processor.purpose}</p><p>{processor.region}</p>
     </li>)}</ul>}
-    <nav aria-label={t("legal")} className="cv-toolbar">{legalPages.filter((item)=>item!==page).map((item)=>
+    <nav aria-label={t("legal")} className="article-links">{legalPages.filter((item)=>item!==page).map((item)=>
       <Link className="blog-link" lang={language} key={item} href={`/${locale}/legal/${item}`}>{policies[language][item].title}</Link>)}</nav>
   </article>;
 }

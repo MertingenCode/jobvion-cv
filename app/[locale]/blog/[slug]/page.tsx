@@ -49,6 +49,8 @@ export default async function BlogArticle({ params }: Props) {
     author: { "@type": "Organization", name: post.author }, datePublished: post.published_at,
     dateModified: post.updated_at, inLanguage: post.locale, mainEntityOfPage: canonical,
   };
+  const alternateLanguages = translations.filter(({ locale }) => locale !== post.locale);
+  const labels = await getTranslations({ locale: post.locale });
   const alt = await coverAlt(post.id, true);
   const nonce = (await headers()).get("x-jobvion-nonce") ?? undefined;
   const date = new Intl.DateTimeFormat(post.locale, { dateStyle: "long", timeZone: "UTC" });
@@ -60,8 +62,14 @@ export default async function BlogArticle({ params }: Props) {
       <p className="article-meta">{t("by", { author: post.author })} {post.published_at && <time dateTime={post.published_at}>{date.format(new Date(post.published_at))}</time>}</p>
       {alt && <Image className="article-cover" src={coverUrl(post.id)} alt={alt} width={600} height={400} unoptimized />}
       <ArticleBody body={post.body} />
-      {translations.filter((item) => item.locale !== post.locale).map((item) =>
-        <Link className="blog-link" key={item.locale} href={`/${item.locale}/blog/${item.slug}`} lang={item.locale} aria-label={item.locale.toUpperCase() + " " + localeNames[item.locale]}>{item.locale.toUpperCase()}</Link>)}
+      {alternateLanguages.length > 0 && (
+        <nav className="article-links article-language-links" aria-label={labels("language")}>
+          {alternateLanguages.map(({ locale, slug }) => (
+            <Link className="blog-link" key={locale} href={`/${locale}/blog/${slug}`} lang={locale}
+              aria-label={locale.toUpperCase() + " " + localeNames[locale]}>{locale.toUpperCase()}</Link>
+          ))}
+        </nav>
+      )}
     </article>
   );
 }

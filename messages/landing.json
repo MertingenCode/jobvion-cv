@@ -59,7 +59,8 @@
     "reviewDetails": "Aktarılan alanları, görevleri ve tarihleri kontrol et.",
     "authHeading": "Başvuruna kaldığın yerden devam et",
     "authIntro": "İlanla eşleşen deneyimini öne çıkar. CV’ni ve ön yazını tek yerde hazırla.",
-    "scratchNote": "Bu yeni CV, ana profilini değiştirmez. CV’yi kaydet veya PDF olarak indir."
+    "scratchNote": "Bu yeni CV, ana profilini değiştirmez. CV’yi kaydet veya PDF olarak indir.",
+    "menu": "Menü"
   },
   "en": {
     "hero": "Build a CV for each job.",
@@ -121,7 +122,8 @@
     "reviewDetails": "Review the imported fields, roles and dates.",
     "authHeading": "Pick up where you left off",
     "authIntro": "Highlight the experience that matches the job. Prepare your CV and cover letter in one place.",
-    "scratchNote": "This new CV keeps your main profile intact. Save the CV or download it as a PDF."
+    "scratchNote": "This new CV keeps your main profile intact. Save the CV or download it as a PDF.",
+    "menu": "Menu"
   },
   "de": {
     "hero": "Ein Lebenslauf für jede Stelle.",
@@ -183,7 +185,8 @@
     "reviewDetails": "Prüfe die übernommenen Felder, Tätigkeiten und Daten.",
     "authHeading": "Setze deine Bewerbung fort",
     "authIntro": "Hebe passende Erfahrungen hervor. Erstelle Lebenslauf und Anschreiben an einem Ort.",
-    "scratchNote": "Dieser neue Lebenslauf lässt dein Hauptprofil unverändert. Speichere ihn oder lade ihn als PDF herunter."
+    "scratchNote": "Dieser neue Lebenslauf lässt dein Hauptprofil unverändert. Speichere ihn oder lade ihn als PDF herunter.",
+    "menu": "Menü"
   },
   "fr": {
     "hero": "Un CV pour chaque offre.",
@@ -245,7 +248,8 @@
     "reviewDetails": "Vérifiez les champs, les postes et les dates importés.",
     "authHeading": "Reprenez votre candidature",
     "authIntro": "Mettez en avant votre expérience pertinente. Préparez votre CV et votre lettre au même endroit.",
-    "scratchNote": "Ce nouveau CV préserve votre profil principal. Enregistrez-le ou téléchargez-le en PDF."
+    "scratchNote": "Ce nouveau CV préserve votre profil principal. Enregistrez-le ou téléchargez-le en PDF.",
+    "menu": "Menu"
   },
   "es": {
     "hero": "Un CV para cada oferta.",
@@ -307,7 +311,8 @@
     "reviewDetails": "Revisa los campos, puestos y fechas importados.",
     "authHeading": "Continúa tu candidatura",
     "authIntro": "Destaca la experiencia que encaja con el puesto. Prepara tu CV y tu carta en un mismo lugar.",
-    "scratchNote": "Este CV conserva tu perfil principal. Guárdalo o descárgalo en PDF."
+    "scratchNote": "Este CV conserva tu perfil principal. Guárdalo o descárgalo en PDF.",
+    "menu": "Menú"
   },
   "it": {
     "hero": "Un CV per ogni annuncio.",
@@ -369,7 +374,8 @@
     "reviewDetails": "Controlla i campi, i ruoli e le date importati.",
     "authHeading": "Riprendi la candidatura",
     "authIntro": "Metti in risalto l’esperienza pertinente. Prepara CV e lettera nello stesso posto.",
-    "scratchNote": "Questo CV lascia intatto il profilo principale. Salvalo o scaricalo in PDF."
+    "scratchNote": "Questo CV lascia intatto il profilo principale. Salvalo o scaricalo in PDF.",
+    "menu": "Menu"
   },
   "pt": {
     "hero": "Um CV para cada vaga.",
@@ -431,7 +437,8 @@
     "reviewDetails": "Verifica os campos, as funções e as datas importadas.",
     "authHeading": "Retoma a tua candidatura",
     "authIntro": "Destaca a experiência que corresponde à vaga. Prepara o CV e a carta no mesmo lugar.",
-    "scratchNote": "Este CV mantém o perfil principal. Guarda-o ou descarrega-o em PDF."
+    "scratchNote": "Este CV mantém o perfil principal. Guarda-o ou descarrega-o em PDF.",
+    "menu": "Menu"
   },
   "nl": {
     "hero": "Een cv voor elke vacature.",
@@ -493,6 +500,7 @@
     "reviewDetails": "Controleer de geïmporteerde velden, rollen en datums.",
     "authHeading": "Ga verder met je sollicitatie",
     "authIntro": "Benadruk ervaring die bij de functie past. Maak je cv en brief op één plek.",
-    "scratchNote": "Dit nieuwe cv laat je hoofdprofiel intact. Sla het op of download het als pdf."
+    "scratchNote": "Dit nieuwe cv laat je hoofdprofiel intact. Sla het op of download het als pdf.",
+    "menu": "Menu"
   }
 }
