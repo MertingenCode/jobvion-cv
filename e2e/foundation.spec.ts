@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 test("negotiates only the root, preserves explicit URLs, and remembers language selection", async ({ browser }) => {
-  const context = await browser.newContext({ locale: "de-DE" });
+  const context = await browser.newContext({ locale: "de-DE", reducedMotion: "reduce" });
   try {
     const page = await context.newPage();
     await page.goto("/");
@@ -43,7 +43,7 @@ test("uses live OS changes in System and persists a manual override", async ({ p
   await page.goto("/en");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 18, 32)");
   await page.emulateMedia({ colorScheme: "light" });
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(248, 250, 252)");
+  await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
   await expect(page.locator('.preference-form[data-enhanced="true"]')).toHaveCount(2);
   await page.getByRole("combobox", { name: "Appearance", exact: true }).selectOption("dark");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
@@ -53,7 +53,7 @@ test("uses live OS changes in System and persists a manual override", async ({ p
   await page.getByRole("combobox", { name: "Appearance", exact: true }).selectOption("light");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.emulateMedia({ colorScheme: "dark" });
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(248, 250, 252)");
+  await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
   await page.getByRole("combobox", { name: "Appearance", exact: true }).selectOption("system");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 18, 32)");
 });

@@ -9,6 +9,7 @@ export default defineConfig({
     ...devices["Desktop Chrome"],
     channel: process.env.JOBVION_BROWSER === "bundled" ? undefined : "chrome",
     baseURL: url,
+    reducedMotion: "reduce",
     trace: "retain-on-failure",
   },
   webServer: process.env.JOBVION_E2E_URL ? undefined : {

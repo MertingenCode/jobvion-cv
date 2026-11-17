@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { isLocale } from "@/i18n/config";
 import { buttonVariants } from "@/components/ui/button";
 import { CvSample } from "@/components/cv-sample";
+import { RefractWater } from "@/components/layout/refract-water";
 import { verifiedUserId } from "@/lib/auth/session";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -22,15 +23,18 @@ export default async function Home({ params }: Props) {
   setRequestLocale(locale);
   const [t, user] = await Promise.all([getTranslations({ locale }), verifiedUserId()]);
   return (
-    <section className="container hero">
-      <div className="intro-content">
-        <h1>{t("slogan")}</h1>
-        <p className="lede">{t("summary")}</p>
-        <Link href={`/${locale}/${user ? "app" : "signup"}`} className={buttonVariants()}>
-          {t(user ? "app" : "getStarted")}
-        </Link>
+    <section className="hero" aria-labelledby="home-title">
+      <RefractWater />
+      <div className="container refract-grid">
+        <div className="intro-content">
+          <h1 id="home-title">{t("slogan")}</h1>
+          <p className="lede">{t("summary")}</p>
+          <Link href={`/${locale}/${user ? "app" : "signup"}`} className={buttonVariants()}>
+            {t(user ? "app" : "getStarted")}
+          </Link>
+        </div>
+        <CvSample />
       </div>
-      <CvSample />
     </section>
   );
 }

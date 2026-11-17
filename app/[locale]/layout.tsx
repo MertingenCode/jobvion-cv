@@ -7,8 +7,11 @@ import { Shell } from "@/components/layout/shell";
 import { isLocale } from "@/i18n/config";
 import { isTheme, themeCookie } from "@/lib/security/preferences";
 import { verifiedUserId } from "@/lib/auth/session";
+import "@fontsource-variable/funnel-display";
+import "@fontsource-variable/funnel-sans";
 import "@fontsource-variable/inter";
 import "../globals.css";
+import "../refract.css";
 
 export default async function LocaleLayout({ children, params }: {
   children: ReactNode;

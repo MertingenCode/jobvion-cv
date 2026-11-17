@@ -1,7 +1,7 @@
-# Jobvion
+# Jobvion design system
 
-Job seekers use the site to create and tailor a CV. Phase 1 introduces the account and the shell around it.
+Theme: Hallmark Refract, water/pool. The pinned reference is Nutlope/hallmark at 04977e15f3dfd6ee4b74c887dac3eb52665d6c92, under `site/themes/refract`. The MIT-licensed water shader is under `lib/refract`.
 
-Use the supplied navy, cobalt and teal palette with Inter throughout the interface. Use a white document in both themes. Keep the header and footer aligned to the same centered 1120px container. The central visual is a typeset example CV showing the format a person will work with. The account screens use a quiet form alongside the same document on wide screens and prioritize the form on small screens.
+Use Funnel Display at weight 400 for headings and Funnel Sans for body, navigation and controls. Use Refract’s plaster paper, pool-blue ink, floating clear navigation, tinted cast shadows and pill-shaped main actions. On the homepage, the original water caustics sit on the right under a real, white example CV. Keep reading copy on the left on plain paper. Respect reduced motion and pause rendering off-screen. Account screens use the same type and control system.
 
-Use fine rules, precise document typography and generous whitespace. Main actions are cobalt. Labels remain sentence case. Focus is immediate and visible. Default to the system color scheme and allow a persistent explicit choice.
+Follow the system color scheme until a visitor chooses an appearance. The Refract reference is light. Jobvion has an additional dark variant built around ink and water. Printed and previewed documents use white paper in both modes.

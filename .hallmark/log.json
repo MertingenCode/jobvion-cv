@@ -1,6 +1,31 @@
 {
   "entries": [
     {
+      "shape": "Stage",
+      "theme": "Refract",
+      "axes": "light/grotesk-sans/cool",
+      "hero": "Stage with example CV over water",
+      "nav": "floating clear pill",
+      "footer": "quiet rule",
+      "imagery": "Hallmark Refract live water shader and HTML example CV",
+      "photos": [],
+      "entry": "Refract redesign",
+      "fingerprint": "refract / water-pool / example CV / floating clear pill",
+      "sections": [
+        "product introduction",
+        "footer"
+      ],
+      "signature": "the white example CV floating over the water caustics",
+      "waived": [
+        "7b: white CV paper is required",
+        "59: the phased shell has only the introduction and footer"
+      ],
+      "prompt": "Use the original Hallmark Refract visual system on Jobvion",
+      "mode": "redesign",
+      "depth": "full",
+      "scope": "site"
+    },
+    {
       "shape": "document composition",
       "theme": "Jobvion supplied system",
       "axes": "light/grotesk/cool",
